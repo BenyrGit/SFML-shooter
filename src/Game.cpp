@@ -1,13 +1,13 @@
 #include "Game.hpp"
 
 Game::Game()
-    : mWindow(sf::VideoMode({ 800u, 600u }), "SFML Game Development - Chapter 1")
-    , mPlayer(40.f)
+    : mWindow(sf::VideoMode({ 1024u, 768u }), "SFML Shooter")
+    , mPlayerShape(40.f)
 {
     mWindow.setFramerateLimit(60);
 
-    mPlayer.setFillColor(sf::Color::Cyan);
-    mPlayer.setPosition({ 100.f, 100.f });
+    mPlayerShape.setFillColor(sf::Color::Cyan);
+    mPlayerShape.setPosition({ 200.f, 150.f });
 }
 
 void Game::run()
@@ -37,6 +37,6 @@ void Game::update()
 void Game::render()
 {
     mWindow.clear();
-    mWindow.draw(mPlayer);
+    mWindow.draw(mPlayerShape);
     mWindow.display();
 }

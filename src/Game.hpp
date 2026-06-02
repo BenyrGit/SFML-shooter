@@ -15,5 +15,5 @@ private:
     void render();
 
     sf::RenderWindow mWindow;
-    sf::CircleShape mPlayer;
+    sf::CircleShape mPlayerShape;
 };
