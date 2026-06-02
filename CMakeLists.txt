@@ -10,7 +10,9 @@ find_package(SFML CONFIG REQUIRED COMPONENTS Graphics Window System)
 
 add_executable(SFMLGame
     src/main.cpp
-)
+    src/Game.cpp
+    src/Game.hpp
+ )
 
 target_link_libraries(SFMLGame PRIVATE
     SFML::Graphics
