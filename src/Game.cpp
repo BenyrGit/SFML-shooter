@@ -2,7 +2,8 @@
 
 namespace
 {
-    constexpr float PlayerSpeed = 5.f;
+    // 200 px par seconde
+    constexpr float PlayerSpeed = 300.f;
 }
 
 Game::Game()
@@ -17,10 +18,16 @@ Game::Game()
 
 void Game::run()
 {
+    // chronomètre
+    sf::Clock clock;
+
     while (mWindow.isOpen())
     {
+        // restart donne le temps écoulé depuis le dernier appel 
+        const sf::Time deltaTime = clock.restart();
+
         processEvents();
-        update();
+        update(deltaTime);
         render();
     }
 }
@@ -46,7 +53,11 @@ void Game::processEvents()
 
 void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
 {
-    if (key == sf::Keyboard::Key::W  || key == sf::Keyboard::Key::Up)
+    if (key == sf::Keyboard::Key::Escape && isPressed)
+    {
+        mWindow.close();
+    }
+    else if (key == sf::Keyboard::Key::W  || key == sf::Keyboard::Key::Up)
     {
         mIsMovingUp = isPressed;
     }
@@ -61,10 +72,10 @@ void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
     else if (key == sf::Keyboard::Key::D || key == sf::Keyboard::Key::Right)
     {
         mIsMovingRight = isPressed;
-    }
+    } 
 }
 
-void Game::update()
+void Game::update(sf::Time deltaTime)
 {
     sf::Vector2f movement{ 0.f, 0.f };
 
@@ -88,7 +99,7 @@ void Game::update()
         movement.x += PlayerSpeed;
     }
 
-    mPlayerShape.move(movement);
+    mPlayerShape.move(movement * deltaTime.asSeconds());
 }
 
 void Game::render()
