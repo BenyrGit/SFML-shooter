@@ -18,16 +18,27 @@ Game::Game()
 
 void Game::run()
 {
-    // chronomètre
+    // temps du jeu = 1/60 seconde
+    constexpr sf::Time TimePerFrame = sf::seconds(1.f / 60.f);
+
+    // chronomètre + temps accumulé 
     sf::Clock clock;
+    sf::Time timeSinceLastUpdate = sf::Time::Zero;
 
     while (mWindow.isOpen())
     {
-        // restart donne le temps écoulé depuis le dernier appel 
-        const sf::Time deltaTime = clock.restart();
 
-        processEvents();
-        update(deltaTime);
+        timeSinceLastUpdate += clock.restart();
+        
+        // pour l'instant le jeu rattrape tout le temps en retard en un seul coup avant de faire un render()
+        while (timeSinceLastUpdate >= TimePerFrame) 
+        {
+            timeSinceLastUpdate -= TimePerFrame;
+
+            processEvents();
+            update(TimePerFrame);
+        }
+
         render();
     }
 }
