@@ -21,3 +21,10 @@ target_link_libraries(SFMLGame PRIVATE
 )
 
 target_compile_features(SFMLGame PRIVATE cxx_std_20)
+
+add_custom_command(
+    TARGET SFMLGame POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/assets
+        $<TARGET_FILE_DIR:SFMLGame>/assets
+)
