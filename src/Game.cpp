@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include <stdexcept>
+#include <string>
 
 // permet de déclarer des fonctions et variables locale. Temporaire
 namespace
@@ -136,6 +137,7 @@ void Game::update(sf::Time deltaTime)
     }
 
     mPlayerSprite.move(movement * deltaTime.asSeconds());
+    keepPlayerInsideWindow();
 }
 
 void Game::render()
@@ -143,4 +145,35 @@ void Game::render()
     mWindow.clear();
     mWindow.draw(mPlayerSprite);
     mWindow.display();
+}
+
+void Game::keepPlayerInsideWindow()
+{
+    sf::Vector2f position = mPlayerSprite.getPosition();
+    const sf::FloatRect bounds = mPlayerSprite.getGlobalBounds();
+
+    const float halfWidth = bounds.size.x / 2.f;
+    const float halfHeight = bounds.size.y / 2.f;
+
+    const sf::Vector2u windowSize = mWindow.getSize();
+
+    if (position.x < halfWidth)
+    {
+        position.x = halfWidth;
+    }
+    else if (position.x > static_cast<float>(windowSize.x) - halfWidth)
+    {
+        position.x = static_cast<float>(windowSize.x) - halfWidth;
+    }
+
+    if (position.y < halfHeight)
+    {
+        position.y = halfHeight;
+    }
+    else if (position.y > static_cast<float>(windowSize.y) - halfHeight)
+    {
+        position.y = static_cast<float>(windowSize.y) - halfHeight;
+    }
+
+    mPlayerSprite.setPosition(position);
 }

@@ -12,8 +12,10 @@ public:
 private:
     void processEvents();
     void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
+
     void update(sf::Time deltaTime);
     void render();
+    void keepPlayerInsideWindow();
 
     sf::RenderWindow    mWindow;
     sf::Texture mPlayerTexture;
