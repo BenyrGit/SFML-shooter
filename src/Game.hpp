@@ -16,7 +16,8 @@ private:
     void render();
 
     sf::RenderWindow    mWindow;
-    sf::CircleShape     mPlayerShape;
+    sf::Texture mPlayerTexture;
+    sf::Sprite mPlayerSprite;
 
     bool mIsMovingUp    = false;
     bool mIsMovingDown  = false;

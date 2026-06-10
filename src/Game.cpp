@@ -1,19 +1,44 @@
 #include "Game.hpp"
+#include <stdexcept>
 
+// permet de déclarer des fonctions et variables locale. Temporaire
 namespace
 {
-    // 200 px par seconde
     constexpr float PlayerSpeed = 300.f;
+
+
+    sf::Texture loadTexture(const std::string& filename)
+    {
+        sf::Texture texture;
+
+        if (!texture.loadFromFile(filename))
+        {
+            throw std::runtime_error("Impossible de charger " + filename);
+        }
+
+        return texture;
+    }
+
+    void centerOrigin(sf::Sprite& sprite)
+    {
+        const sf::FloatRect bounds = sprite.getLocalBounds();
+
+        sprite.setOrigin({
+            bounds.position.x + bounds.size.x / 2.f,
+            bounds.position.y + bounds.size.y / 2.f
+            });
+    }
 }
 
 Game::Game()
     : mWindow(sf::VideoMode({ 1024u, 768u }), "SFML Shooter")
-    , mPlayerShape(40.f)
+    , mPlayerTexture(loadTexture("assets/textures/Eagle.png"))
+    , mPlayerSprite(mPlayerTexture)  // SFML 3.0 a besoin d'une texture pour initialiser, donc on donne une texture vide
 {
     mWindow.setFramerateLimit(60);
 
-    mPlayerShape.setFillColor(sf::Color::Cyan);
-    mPlayerShape.setPosition({ 200.f, 150.f });
+    centerOrigin(mPlayerSprite);
+    mPlayerSprite.setPosition({ 512.f, 384.f });
 }
 
 void Game::run()
@@ -110,12 +135,12 @@ void Game::update(sf::Time deltaTime)
         movement.x += PlayerSpeed;
     }
 
-    mPlayerShape.move(movement * deltaTime.asSeconds());
+    mPlayerSprite.move(movement * deltaTime.asSeconds());
 }
 
 void Game::render()
 {
     mWindow.clear();
-    mWindow.draw(mPlayerShape);
+    mWindow.draw(mPlayerSprite);
     mWindow.display();
 }
