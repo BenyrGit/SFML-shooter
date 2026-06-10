@@ -12,9 +12,8 @@ add_executable(SFMLGame
     src/main.cpp
     src/Game.cpp
     src/Game.hpp
+    src/ResourceHolder.hpp
     src/ResourceIdentifiers.hpp
-    src/TextureHolder.cpp
-    src/TextureHolder.hpp
 )
 
 target_link_libraries(SFMLGame PRIVATE

@@ -1,9 +1,13 @@
 #pragma once
 
-#include "TextureHolder.hpp"
+#include "ResourceHolder.hpp"
+#include "ResourceIdentifiers.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <optional>
+
+// Alisas de type pour la lisibilité du code
+using TextureHolder = ResourceHolder<sf::Texture, Textures::ID>;
 
 class Game
 {
