@@ -1,6 +1,9 @@
 #pragma once
 
+#include "TextureHolder.hpp"
+
 #include <SFML/Graphics.hpp>
+#include <optional>
 
 class Game
 {
@@ -17,9 +20,9 @@ private:
     void render();
     void keepPlayerInsideWindow();
 
-    sf::RenderWindow    mWindow;
-    sf::Texture mPlayerTexture;
-    sf::Sprite mPlayerSprite;
+    sf::RenderWindow            mWindow;
+    TextureHolder               mTextures;
+    std::optional<sf::Sprite>   mPlayerSprite;  // On utilise optional pour ne pas avoir à construire le sprite avant de charger la texture  
 
     bool mIsMovingUp    = false;
     bool mIsMovingDown  = false;

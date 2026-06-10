@@ -7,19 +7,7 @@ namespace
 {
     constexpr float PlayerSpeed = 300.f;
 
-
-    sf::Texture loadTexture(const std::string& filename)
-    {
-        sf::Texture texture;
-
-        if (!texture.loadFromFile(filename))
-        {
-            throw std::runtime_error("Impossible de charger " + filename);
-        }
-
-        return texture;
-    }
-
+    // fonction interne pour centrer le sprite
     void centerOrigin(sf::Sprite& sprite)
     {
         const sf::FloatRect bounds = sprite.getLocalBounds();
@@ -33,13 +21,16 @@ namespace
 
 Game::Game()
     : mWindow(sf::VideoMode({ 1024u, 768u }), "SFML Shooter")
-    , mPlayerTexture(loadTexture("assets/textures/Eagle.png"))
-    , mPlayerSprite(mPlayerTexture)  // SFML 3.0 a besoin d'une texture pour initialiser, donc on donne une texture vide
+    , mTextures()
+    , mPlayerSprite(std::nullopt)
 {
     mWindow.setFramerateLimit(60);
 
-    centerOrigin(mPlayerSprite);
-    mPlayerSprite.setPosition({ 512.f, 384.f });
+    mTextures.load(Textures::ID::Eagle, "assets/textures/Eagle.png");
+
+    mPlayerSprite.emplace(sf::Sprite{ mTextures.get(Textures::ID::Eagle) });
+    centerOrigin(*mPlayerSprite);
+    mPlayerSprite->setPosition({ 512.f, 384.f });
 }
 
 void Game::run()
@@ -136,21 +127,21 @@ void Game::update(sf::Time deltaTime)
         movement.x += PlayerSpeed;
     }
 
-    mPlayerSprite.move(movement * deltaTime.asSeconds());
+    mPlayerSprite->move(movement * deltaTime.asSeconds());
     keepPlayerInsideWindow();
 }
 
 void Game::render()
 {
     mWindow.clear();
-    mWindow.draw(mPlayerSprite);
+    mWindow.draw(*mPlayerSprite);
     mWindow.display();
 }
 
 void Game::keepPlayerInsideWindow()
 {
-    sf::Vector2f position = mPlayerSprite.getPosition();
-    const sf::FloatRect bounds = mPlayerSprite.getGlobalBounds();
+    sf::Vector2f position = mPlayerSprite->getPosition();
+    const sf::FloatRect bounds = mPlayerSprite->getGlobalBounds();
 
     const float halfWidth = bounds.size.x / 2.f;
     const float halfHeight = bounds.size.y / 2.f;
@@ -175,5 +166,5 @@ void Game::keepPlayerInsideWindow()
         position.y = static_cast<float>(windowSize.y) - halfHeight;
     }
 
-    mPlayerSprite.setPosition(position);
+    mPlayerSprite->setPosition(position);
 }
