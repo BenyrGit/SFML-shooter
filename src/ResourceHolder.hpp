@@ -53,7 +53,7 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string
     insertResource(id, std::move(resource));
 }
 
-// Surcharge de load pour accpeter un deuxième paramètre. Pour les shaders par exemple.
+// Surcharge de load pour accepter tous les paramètres supplémentaire.
 template <typename Resource, typename Identifier>
 template <typename... Args>
 void ResourceHolder<Resource, Identifier>::load(
