@@ -4,6 +4,16 @@ namespace Textures
 {
     enum class ID
     {
-        Eagle
+        Eagle,
+        Raptor,
+        Desert
+    };
+}
+
+namespace Fonts
+{
+    enum class ID
+    {
+        Main
     };
 }
