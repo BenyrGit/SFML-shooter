@@ -1,3 +1,18 @@
+/****************************************
+ Fichier		:	ResourceHolder.hpp
+ Auteur			:	Benjamin Paquette
+ Fonctionnalité :	Template - Gestionnaire de ressource
+ Date			:	09-06-2026
+
+ Vérification	:
+ JJ-MM-AAAA     Nom                     Approuvé
+ =========================================================
+
+ Historique de modifications :
+ JJ-MM-AAAA     Nom                     Commentaire
+ =========================================================
+
+ ****************************************/
 #pragma once
 
 #include <cassert>
