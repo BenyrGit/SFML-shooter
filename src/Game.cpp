@@ -27,6 +27,8 @@ Game::Game()
     mWindow.setFramerateLimit(60);
 
     mTextures.load(Textures::ID::Eagle, "assets/textures/Eagle.png");
+    // mTextures.load(Textures::ID::Raptor, "assets/textures/Raptor.png");
+    // mTextures.load(Textures::ID::Desert, "assets/textures/Desert.png");
 
     mPlayerSprite.emplace(sf::Sprite{ mTextures.get(Textures::ID::Eagle) });
     centerOrigin(*mPlayerSprite);

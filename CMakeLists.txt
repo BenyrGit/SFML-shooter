@@ -14,6 +14,7 @@ add_executable(SFMLGame
     src/Game.hpp
     src/ResourceHolder.hpp
     src/ResourceIdentifiers.hpp
+    src/ResourceTypes.hpp
 )
 
 target_link_libraries(SFMLGame PRIVATE

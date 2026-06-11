@@ -1,8 +1,21 @@
+/****************************************
+ Fichier		:	Game.hpp
+ Auteur			:	Benjamin Paquette
+ Fonctionnalité :	Gestion de la logique du jeu
+ Date			:	08-06-2026
+
+ Vérification	:
+ JJ-MM-AAAA     Nom                     Approuvé
+ =========================================================
+
+ Historique de modifications :
+ JJ-MM-AAAA     Nom                     Commentaire
+ =========================================================
+
+ ****************************************/
 #pragma once
 
-#include "ResourceHolder.hpp"
-#include "ResourceIdentifiers.hpp"
-#include "ResourceType.hpp"
+#include "ResourceTypes.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <optional>
