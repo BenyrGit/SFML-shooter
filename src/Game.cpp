@@ -137,6 +137,7 @@ void Game::render()
 {
     mWindow.clear();
     mWindow.draw(*mPlayerSprite);
+    mWindow.draw(mSceneGraph);
     mWindow.display();
 }
 

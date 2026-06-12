@@ -12,11 +12,9 @@ add_executable(SFMLGame
     src/main.cpp
     src/Game.cpp
     src/Game.hpp
-
     src/ResourceHolder.hpp
     src/ResourceIdentifiers.hpp
     src/ResourceTypes.hpp
-
     src/SceneNode.hpp
     src/SceneNode.cpp
     src/SpriteNode.hpp
