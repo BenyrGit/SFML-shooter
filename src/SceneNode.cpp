@@ -39,6 +39,17 @@ void SceneNode::draw(
     // permet d'ajouter les transformations du parent aux l'enfants
     states.transform *= getTransform();
 
+    drawCurrent(target, states);
+    drawChildren(target, states);
+}
+
+void SceneNode::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    // méthode virtuelle
+}
+
+void SceneNode::drawChildren(sf::RenderTarget& target, sf::RenderStates states) const
+{
     for (const Ptr& child : mChildren)
     {
         target.draw(*child, states);

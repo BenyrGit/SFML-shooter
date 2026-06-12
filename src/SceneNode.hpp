@@ -11,7 +11,7 @@
  Historique de modifications :
  JJ-MM-AAAA     Nom                     Commentaire
  =========================================================
-
+ 12-06-2026     Benjamin Paquette       Ajout de méthodes pour déssiner un parent avant les enfants
  ****************************************/
 #pragma once
 
@@ -23,16 +23,20 @@
 class SceneNode : public sf::Transformable, public sf::Drawable
 {
 public:
+    // Allias
     using Ptr = std::unique_ptr<SceneNode>;
 
-public:
+    // Méthodes
     void attachChild(Ptr child);
     Ptr detachChild(const SceneNode& node);
 
 private:
+    // Méthodes
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+    void drawChildren(sf::RenderTarget& target, sf::RenderStates states) const;
 
-private:
-    std::vector<Ptr> mChildren;
-    SceneNode* mParent = nullptr;
+    // Attributs
+    std::vector<Ptr>    mChildren;
+    SceneNode*          mParent = nullptr;
 };
