@@ -15,7 +15,8 @@ add_executable(SFMLGame
     src/ResourceHolder.hpp
     src/ResourceIdentifiers.hpp
     src/ResourceTypes.hpp
-)
+    src/SceneNode.hpp
+    src/SceneNode.cpp)
 
 target_link_libraries(SFMLGame PRIVATE
     SFML::Graphics
