@@ -28,7 +28,7 @@ public:
     sf::FloatRect getBoundingRect() const;
 
 private:
-    // Méthode
+    // Méthodes
     virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
 
     // Attribut

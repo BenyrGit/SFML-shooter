@@ -12,6 +12,7 @@
  JJ-MM-AAAA     Nom                     Commentaire
  =========================================================
  12-06-2026     Benjamin Paquette       Ajout de méthodes pour déssiner un parent avant les enfants
+ 12-06-2026     Benjamin Paquette       Méthodes pour mettre à jour les objets
  ****************************************/
 #pragma once
 
@@ -30,12 +31,15 @@ public:
     virtual ~SceneNode() = default;
     void attachChild(Ptr child);
     Ptr detachChild(const SceneNode& node);
+    void update(sf::Time deltaTime);
 
 private:
     // Méthodes
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
     void drawChildren(sf::RenderTarget& target, sf::RenderStates states) const;
+    virtual void updateCurrent(sf::Time deltaTime);
+    void updateChildren(sf::Time deltaTime);
 
     // Attributs
     std::vector<Ptr>    mChildren;

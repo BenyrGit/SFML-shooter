@@ -31,6 +31,13 @@ SceneNode::Ptr SceneNode::detachChild(const SceneNode& node)
     return result;
 }
 
+void SceneNode::update(sf::Time deltaTime)
+{
+    updateCurrent(deltaTime);
+    updateChildren(deltaTime);
+}
+
+
 void SceneNode::draw(
     sf::RenderTarget& target,
     sf::RenderStates states
@@ -53,5 +60,17 @@ void SceneNode::drawChildren(sf::RenderTarget& target, sf::RenderStates states) 
     for (const Ptr& child : mChildren)
     {
         target.draw(*child, states);
+    }
+}
+
+void SceneNode::updateCurrent(sf::Time deltaTime)
+{
+}
+
+void SceneNode::updateChildren(sf::Time deltaTime)
+{
+    for (Ptr& child : mChildren)
+    {
+        child->update(deltaTime);
     }
 }
