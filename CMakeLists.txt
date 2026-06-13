@@ -21,7 +21,9 @@ add_executable(SFMLGame
     src/SpriteNode.cpp
     src/Entity.hpp
     src/Entity.cpp
- )
+    src/Aircraft.cpp
+    src/Aircraft.hpp
+  )
 
 target_link_libraries(SFMLGame PRIVATE
     SFML::Graphics

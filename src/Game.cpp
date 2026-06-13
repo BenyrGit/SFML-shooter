@@ -21,7 +21,7 @@ Game::Game()
     // mTextures.load(Textures::ID::Desert, "assets/textures/Desert.png");
 
     // création d'un spiteNode avec la texture Eagle
-    auto player = std::make_unique<SpriteNode>(mTextures.get(Textures::ID::Eagle));
+    auto player = std::make_unique<Aircraft>(Aircraft::Type::Eagle, mTextures);
     player->setPosition({ 512.f, 384.f });
 
     // donne l'adresse au pointeur

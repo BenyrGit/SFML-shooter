@@ -17,7 +17,7 @@
 
 #include "ResourceTypes.hpp"
 #include "SceneNode.hpp"
-#include "SpriteNode.hpp"
+#include "Aircraft.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -41,7 +41,7 @@ private:
     sf::RenderWindow    mWindow;
     TextureHolder       mTextures;
     SceneNode           mSceneGraph;
-    SpriteNode*         mPlayerAircraft = nullptr;
+    Aircraft*           mPlayerAircraft = nullptr;
 
     bool mIsMovingUp    = false;
     bool mIsMovingDown  = false;
