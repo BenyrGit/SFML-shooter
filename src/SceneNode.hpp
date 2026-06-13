@@ -35,11 +35,14 @@ public:
 
 private:
     // Méthodes
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-    virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
-    void drawChildren(sf::RenderTarget& target, sf::RenderStates states) const;
     virtual void updateCurrent(sf::Time deltaTime);
     void updateChildren(sf::Time deltaTime);
+    
+    virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const;
+    void drawChildren(sf::RenderTarget& target, sf::RenderStates states) const;
+
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+  
 
     // Attributs
     std::vector<Ptr>    mChildren;

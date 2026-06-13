@@ -135,6 +135,7 @@ void Game::update(sf::Time deltaTime)
 
     mPlayerAircraft->move(movement * deltaTime.asSeconds());
     keepPlayerInsideWindow();
+    mSceneGraph.update(deltaTime);
 }
 
 void Game::render()
