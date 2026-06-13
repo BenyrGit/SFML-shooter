@@ -23,7 +23,9 @@ add_executable(SFMLGame
     src/Entity.cpp
     src/Aircraft.cpp
     src/Aircraft.hpp
-  )
+    src/World.cpp
+    src/World.hpp
+)
 
 target_link_libraries(SFMLGame PRIVATE
     SFML::Graphics

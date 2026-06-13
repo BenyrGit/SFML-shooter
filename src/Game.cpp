@@ -10,24 +10,9 @@ namespace
 
 Game::Game()
     : mWindow(sf::VideoMode({ 1024u, 768u }), "SFML Shooter")
-    , mTextures()
-    , mSceneGraph()
-    , mPlayerAircraft(nullptr)
+    ,mWorld(mWindow)
 {
     mWindow.setFramerateLimit(60);
-
-    mTextures.load(Textures::ID::Eagle, "assets/textures/Eagle.png");
-    mTextures.load(Textures::ID::Raptor, "assets/textures/Raptor.png");
-    // mTextures.load(Textures::ID::Desert, "assets/textures/Desert.png");
-
-    // création d'un spiteNode avec la texture Eagle
-    auto player = std::make_unique<Aircraft>(Aircraft::Type::Eagle, mTextures);
-    player->setPosition({ 512.f, 384.f });
-
-    // donne l'adresse au pointeur
-    mPlayerAircraft = player.get();
-    // Transfère la propriété au scene graph
-    mSceneGraph.attachChild(std::move(player));
 }
 
 void Game::run()
@@ -133,45 +118,14 @@ void Game::update(sf::Time deltaTime)
         movement.x += PlayerSpeed;
     }
 
-    mPlayerAircraft->move(movement * deltaTime.asSeconds());
-    keepPlayerInsideWindow();
-    mSceneGraph.update(deltaTime);
+    mWorld.handlePlayerMovement(movement, deltaTime);
+    mWorld.update(deltaTime);
 }
 
 void Game::render()
 {
     mWindow.clear();
-    mWindow.draw(mSceneGraph);
+    mWorld.draw();
     mWindow.display();
 }
 
-void Game::keepPlayerInsideWindow()
-{
-    sf::Vector2f position = mPlayerAircraft->getPosition();
-    const sf::FloatRect bounds = mPlayerAircraft->getBoundingRect();
-
-    const float halfWidth = bounds.size.x / 2.f;
-    const float halfHeight = bounds.size.y / 2.f;
-
-    const sf::Vector2u windowSize = mWindow.getSize();
-
-    if (position.x < halfWidth)
-    {
-        position.x = halfWidth;
-    }
-    else if (position.x > static_cast<float>(windowSize.x) - halfWidth)
-    {
-        position.x = static_cast<float>(windowSize.x) - halfWidth;
-    }
-
-    if (position.y < halfHeight)
-    {
-        position.y = halfHeight;
-    }
-    else if (position.y > static_cast<float>(windowSize.y) - halfHeight)
-    {
-        position.y = static_cast<float>(windowSize.y) - halfHeight;
-    }
-
-    mPlayerAircraft->setPosition(position);
-}

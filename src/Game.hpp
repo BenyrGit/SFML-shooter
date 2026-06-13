@@ -1,7 +1,7 @@
 /****************************************
  Fichier		:	Game.hpp
  Auteur			:	Benjamin Paquette
- Fonctionnalité :	Gestion de la logique du jeu
+ Fonctionnalité :	Relie les différents éléments du jeu
  Date			:	08-06-2026
 
  Vérification	:
@@ -12,12 +12,11 @@
  JJ-MM-AAAA     Nom                     Commentaire
  =========================================================
  12-06-2026     Benjamin                ajout de sceneNode
+ 13-06-2026     Benjamin                Transfert de la logique vers World
  ****************************************/
 #pragma once
 
-#include "ResourceTypes.hpp"
-#include "SceneNode.hpp"
-#include "Aircraft.hpp"
+#include "World.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -35,13 +34,10 @@ private:
 
     void update(sf::Time deltaTime);
     void render();
-    void keepPlayerInsideWindow();
 
     // Attributs
     sf::RenderWindow    mWindow;
-    TextureHolder       mTextures;
-    SceneNode           mSceneGraph;
-    Aircraft*           mPlayerAircraft = nullptr;
+    World mWorld;
 
     bool mIsMovingUp    = false;
     bool mIsMovingDown  = false;
