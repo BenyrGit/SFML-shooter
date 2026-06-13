@@ -18,7 +18,7 @@ add_executable(SFMLGame
     src/SceneNode.hpp
     src/SceneNode.cpp
     src/SpriteNode.hpp
-    src/SpriteNode.hpp
+    src/SpriteNode.cpp
 )
 
 target_link_libraries(SFMLGame PRIVATE

@@ -6,23 +6,13 @@
 namespace
 {
     constexpr float PlayerSpeed = 300.f;
-
-    // fonction interne pour centrer le sprite
-    void centerOrigin(sf::Sprite& sprite)
-    {
-        const sf::FloatRect bounds = sprite.getLocalBounds();
-
-        sprite.setOrigin({
-            bounds.position.x + bounds.size.x / 2.f,
-            bounds.position.y + bounds.size.y / 2.f
-            });
-    }
 }
 
 Game::Game()
     : mWindow(sf::VideoMode({ 1024u, 768u }), "SFML Shooter")
     , mTextures()
-    , mPlayerSprite(std::nullopt)
+    , mSceneGraph()
+    , mPlayerAircraft(nullptr)
 {
     mWindow.setFramerateLimit(60);
 
@@ -30,9 +20,14 @@ Game::Game()
     mTextures.load(Textures::ID::Raptor, "assets/textures/Raptor.png");
     // mTextures.load(Textures::ID::Desert, "assets/textures/Desert.png");
 
-    mPlayerSprite.emplace(sf::Sprite{ mTextures.get(Textures::ID::Eagle) });
-    centerOrigin(*mPlayerSprite);
-    mPlayerSprite->setPosition({ 512.f, 384.f });
+    // création d'un spiteNode avec la texture Eagle
+    auto player = std::make_unique<SpriteNode>(mTextures.get(Textures::ID::Eagle));
+    player->setPosition({ 512.f, 384.f });
+
+    // donne l'adresse au pointeur
+    mPlayerAircraft = player.get();
+    // Transfère la propriété au scene graph
+    mSceneGraph.attachChild(std::move(player));
 }
 
 void Game::run()
@@ -55,10 +50,19 @@ void Game::run()
             timeSinceLastUpdate -= TimePerFrame;
 
             processEvents();
+
+            if (!mWindow.isOpen())
+            {
+                return;
+            }
+
             update(TimePerFrame);
         }
 
-        render();
+        if (mWindow.isOpen())
+        {
+            render();
+        }
     }
 }
 
@@ -129,22 +133,21 @@ void Game::update(sf::Time deltaTime)
         movement.x += PlayerSpeed;
     }
 
-    mPlayerSprite->move(movement * deltaTime.asSeconds());
+    mPlayerAircraft->move(movement * deltaTime.asSeconds());
     keepPlayerInsideWindow();
 }
 
 void Game::render()
 {
     mWindow.clear();
-    mWindow.draw(*mPlayerSprite);
     mWindow.draw(mSceneGraph);
     mWindow.display();
 }
 
 void Game::keepPlayerInsideWindow()
 {
-    sf::Vector2f position = mPlayerSprite->getPosition();
-    const sf::FloatRect bounds = mPlayerSprite->getGlobalBounds();
+    sf::Vector2f position = mPlayerAircraft->getPosition();
+    const sf::FloatRect bounds = mPlayerAircraft->getBoundingRect();
 
     const float halfWidth = bounds.size.x / 2.f;
     const float halfHeight = bounds.size.y / 2.f;
@@ -169,5 +172,5 @@ void Game::keepPlayerInsideWindow()
         position.y = static_cast<float>(windowSize.y) - halfHeight;
     }
 
-    mPlayerSprite->setPosition(position);
+    mPlayerAircraft->setPosition(position);
 }

@@ -27,6 +27,7 @@ public:
     using Ptr = std::unique_ptr<SceneNode>;
 
     // Méthodes
+    virtual ~SceneNode() = default;
     void attachChild(Ptr child);
     Ptr detachChild(const SceneNode& node);
 

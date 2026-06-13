@@ -11,7 +11,8 @@
  Historique de modifications :
  JJ-MM-AAAA     Nom                     Commentaire
  =========================================================
-
+ 12-06-2026     Benjamin                Ajout méthode pour connaitre les bounds de son sprite
+ 12-06-2026     Benjamin                Méthode interne pour centrer origin des sprites
  ****************************************/
 #pragma once
 
@@ -24,6 +25,7 @@ class SpriteNode : public SceneNode
 {
 public:
     explicit SpriteNode(const sf::Texture& texture);
+    sf::FloatRect getBoundingRect() const;
 
 private:
     // Méthode

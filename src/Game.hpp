@@ -17,10 +17,9 @@
 
 #include "ResourceTypes.hpp"
 #include "SceneNode.hpp"
+#include "SpriteNode.hpp"
 
 #include <SFML/Graphics.hpp>
-#include <optional>
-
 
 class Game
 {
@@ -39,10 +38,10 @@ private:
     void keepPlayerInsideWindow();
 
     // Attributs
-    sf::RenderWindow            mWindow;
-    TextureHolder               mTextures;
-    std::optional<sf::Sprite>   mPlayerSprite;  // On utilise optional pour ne pas avoir à construire le sprite avant de charger la texture  
-    SceneNode                   mSceneGraph;
+    sf::RenderWindow    mWindow;
+    TextureHolder       mTextures;
+    SceneNode           mSceneGraph;
+    SpriteNode*         mPlayerAircraft = nullptr;
 
     bool mIsMovingUp    = false;
     bool mIsMovingDown  = false;
