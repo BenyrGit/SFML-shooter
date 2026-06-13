@@ -20,6 +20,7 @@
 #include "SceneNode.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <array>
 
 class World
 {
@@ -33,14 +34,27 @@ public:
     void handlePlayerMovement(sf::Vector2f movement, sf::Time deltaTime);
 
 private:
+
+    enum class Layer
+    {
+        Background,
+        Air,
+        LayerCount
+    };
+
     void loadTextures();
     void buildScene();
     void keepPlayerInsideWindow();
+
+    static std::size_t toIndex(Layer layer);
 
 private:
     sf::RenderWindow& mWindow;
 
     TextureHolder mTextures;
     SceneNode mSceneGraph;
+
+    std::array<SceneNode*, static_cast<std::size_t>(Layer::LayerCount)> mSceneLayers{};
+
     Aircraft* mPlayerAircraft = nullptr;
 };

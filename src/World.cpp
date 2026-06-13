@@ -20,12 +20,25 @@ void World::loadTextures()
 // Construit les différentes couches du monde
 void World::buildScene()
 {
+    // On crée toutes les couches du monde
+    for (std::size_t i = 0; i < mSceneLayers.size(); ++i)
+    {
+        // chaque couche est un SceneNode
+        auto layer = std::make_unique<SceneNode>();
+
+        mSceneLayers[i] = layer.get();
+
+        // Le SceneGraph est le propriétaire des couches
+        mSceneGraph.attachChild(std::move(layer));
+    }
+
     auto player = std::make_unique<Aircraft>(Aircraft::Type::Eagle, mTextures);
     player->setPosition({ 512.f, 384.f });
 
     mPlayerAircraft = player.get();
 
-    mSceneGraph.attachChild(std::move(player));
+    // Le joueur est attaché à la couche Air
+    mSceneLayers[toIndex(Layer::Air)]->attachChild(std::move(player));
 }
 
 void World::update(sf::Time deltaTime)
@@ -74,4 +87,9 @@ void World::keepPlayerInsideWindow()
     }
 
     mPlayerAircraft->setPosition(position);
+}
+
+std::size_t World::toIndex(World::Layer layer)
+{
+    return static_cast<std::size_t>(layer);
 }
