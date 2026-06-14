@@ -31,7 +31,7 @@ public:
     void update(sf::Time deltaTime);
     void draw();
 
-    void handlePlayerMovement(sf::Vector2f movement, sf::Time deltaTime);
+    void setPlayerVelocity(sf::Vector2f velocity);
 
 private:
 
@@ -50,6 +50,7 @@ private:
 
 private:
     sf::RenderWindow& mWindow;
+    sf::View mWorldView;
 
     TextureHolder mTextures;
     SceneNode mSceneGraph;

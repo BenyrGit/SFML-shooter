@@ -118,7 +118,7 @@ void Game::update(sf::Time deltaTime)
         movement.x += PlayerSpeed;
     }
 
-    mWorld.handlePlayerMovement(movement, deltaTime);
+    mWorld.setPlayerVelocity(movement);
     mWorld.update(deltaTime);
 }
 

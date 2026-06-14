@@ -1,7 +1,14 @@
 #include "World.hpp"
+#include "SpriteNode.hpp"
+
+namespace
+{
+    constexpr float ScrollSpeed = -50.f;
+}
 
 World::World(sf::RenderWindow& window)
     : mWindow(window)
+    , mWorldView(window.getDefaultView())
     , mTextures()
     , mSceneGraph()
     , mPlayerAircraft(nullptr)
@@ -14,7 +21,7 @@ void World::loadTextures()
 {
     mTextures.load(Textures::ID::Eagle, "assets/textures/Eagle.png");
     mTextures.load(Textures::ID::Raptor, "assets/textures/Raptor.png");
-    // mTextures.load(Textures::ID::Desert, "assets/textures/Desert.png");
+    mTextures.load(Textures::ID::Desert, "assets/textures/Desert.png");
 }
 
 // Construit les différentes couches du monde
@@ -32,6 +39,13 @@ void World::buildScene()
         mSceneGraph.attachChild(std::move(layer));
     }
 
+    // Background
+    auto background = std::make_unique<SpriteNode>(mTextures.get(Textures::ID::Desert));
+    background->setPosition({ 512.f, 384.f });
+
+    mSceneLayers[toIndex(Layer::Background)]->attachChild(std::move(background));
+
+    // Joueur
     auto player = std::make_unique<Aircraft>(Aircraft::Type::Eagle, mTextures);
     player->setPosition({ 512.f, 384.f });
 
@@ -43,6 +57,9 @@ void World::buildScene()
 
 void World::update(sf::Time deltaTime)
 {
+    // scrolling de la camera
+    mWorldView.move({ 0.f, ScrollSpeed * deltaTime.asSeconds() });
+
     mSceneGraph.update(deltaTime);
 
     keepPlayerInsideWindow();
@@ -50,12 +67,15 @@ void World::update(sf::Time deltaTime)
 
 void World::draw()
 {
+    mWindow.setView(mWorldView);
     mWindow.draw(mSceneGraph);
 }
 
-void World::handlePlayerMovement(sf::Vector2f movement, sf::Time deltaTime)
+void World::setPlayerVelocity(sf::Vector2f velocity)
 {
-    mPlayerAircraft->move(movement * deltaTime.asSeconds());
+    velocity.y += ScrollSpeed;
+
+    mPlayerAircraft->setVelocity(velocity);
 }
 
 void World::keepPlayerInsideWindow()
@@ -66,24 +86,30 @@ void World::keepPlayerInsideWindow()
     const float halfWidth = bounds.size.x / 2.f;
     const float halfHeight = bounds.size.y / 2.f;
 
-    const sf::Vector2u windowSize = mWindow.getSize();
+    const sf::Vector2f viewCenter = mWorldView.getCenter();
+    const sf::Vector2f viewSize = mWorldView.getSize();
 
-    if (position.x < halfWidth)
+    const float left = viewCenter.x - viewSize.x / 2.f;
+    const float right = viewCenter.x + viewSize.x / 2.f;
+    const float top = viewCenter.y - viewSize.y / 2.f;
+    const float bottom = viewCenter.y + viewSize.y / 2.f;
+
+    if (position.x < left + halfWidth)
     {
-        position.x = halfWidth;
+        position.x = left + halfWidth;
     }
-    else if (position.x > static_cast<float>(windowSize.x) - halfWidth)
+    else if (position.x > right - halfWidth)
     {
-        position.x = static_cast<float>(windowSize.x) - halfWidth;
+        position.x = right - halfWidth;
     }
 
-    if (position.y < halfHeight)
+    if (position.y < top + halfHeight)
     {
-        position.y = halfHeight;
+        position.y = top + halfHeight;
     }
-    else if (position.y > static_cast<float>(windowSize.y) - halfHeight)
+    else if (position.y > bottom - halfHeight)
     {
-        position.y = static_cast<float>(windowSize.y) - halfHeight;
+        position.y = bottom - halfHeight;
     }
 
     mPlayerAircraft->setPosition(position);
