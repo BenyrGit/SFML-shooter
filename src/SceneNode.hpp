@@ -13,6 +13,7 @@
  =========================================================
  12-06-2026     Benjamin Paquette       Ajout de méthodes pour déssiner un parent avant les enfants
  12-06-2026     Benjamin Paquette       Méthodes pour mettre à jour les objets
+ 15-06-2026     Benjamin Paquette       Ajout de méthodes pour avoir la transformation global
  ****************************************/
 #pragma once
 
@@ -32,6 +33,8 @@ public:
     void attachChild(Ptr child);
     Ptr detachChild(const SceneNode& node);
     void update(sf::Time deltaTime);
+    sf::Transform getWorldTransform() const;
+    sf::Vector2f getWorldPosition() const;
 
 private:
     // Méthodes

@@ -37,6 +37,24 @@ void SceneNode::update(sf::Time deltaTime)
     updateChildren(deltaTime);
 }
 
+sf::Transform SceneNode::getWorldTransform() const
+{
+    sf::Transform transform = sf::Transform::Identity;
+
+    // On part de this et on remonte tous les parents pour avoir toutes les transformations
+    for (const SceneNode* node = this; node != nullptr; node = node->mParent)
+    {
+        // on combine les transformations
+        transform = node->getTransform() * transform;
+    }
+
+    return transform;
+}
+
+sf::Vector2f SceneNode::getWorldPosition() const
+{
+    return getWorldTransform().transformPoint({ 0.f, 0.f });
+}
 
 void SceneNode::draw(
     sf::RenderTarget& target,

@@ -28,6 +28,6 @@ void SpriteNode::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) 
 
 sf::FloatRect SpriteNode::getBoundingRect() const
 {
-    // on utiliser getTransform pour avoir les limites avec le repère du parent
-    return getTransform().transformRect(mSprite.getGlobalBounds());
+    // on utiliser getWorldTransform pour avoir toutes les transformations incluant les parents 
+    return getWorldTransform().transformRect(mSprite.getGlobalBounds());
 }

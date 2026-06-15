@@ -38,7 +38,7 @@ Aircraft::Aircraft(Type type, const TextureHolder& textures)
 
 sf::FloatRect Aircraft::getBoundingRect() const
 {
-    return getTransform().transformRect(mSprite.getLocalBounds());
+    return getWorldTransform().transformRect(mSprite.getLocalBounds());
 }
 
 void Aircraft::drawCurrent(
