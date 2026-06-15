@@ -27,6 +27,8 @@ add_executable(SFMLGame
     src/World.hpp
     src/Category.hpp
     src/Command.hpp
+    src/CommandQueue.cpp
+    src/CommandQueue.hpp
 )
 
 target_link_libraries(SFMLGame PRIVATE

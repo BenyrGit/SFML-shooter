@@ -18,6 +18,7 @@ World::World(sf::RenderWindow& window)
     , mSpawnPosition({ ViewWidth / 2.f, WorldHeight - ViewHeight / 4.f })   // Position de départ du joueur    
     , mScrollSpeed(-50.f)
     , mPlayerAircraft(nullptr)
+    , mCommandQueue()
 {
     loadTextures();
     buildScene();
@@ -87,6 +88,12 @@ void World::update(sf::Time deltaTime)
         mWorldView.move({ 0.f, mScrollSpeed * deltaTime.asSeconds() });
     }
 
+    // Traite les commandes
+    while (!mCommandQueue.isEmpty())
+    {
+        mSceneGraph.onCommand(mCommandQueue.pop(), deltaTime);
+    }
+
     mSceneGraph.update(deltaTime);
 
     keepPlayerInsideWindow();
@@ -103,6 +110,11 @@ void World::setPlayerVelocity(sf::Vector2f velocity)
     velocity.y += mScrollSpeed;
 
     mPlayerAircraft->setVelocity(velocity);
+}
+
+CommandQueue& World::getCommandQueue()
+{
+    return mCommandQueue;
 }
 
 void World::keepPlayerInsideWindow()

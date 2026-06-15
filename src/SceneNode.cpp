@@ -56,6 +56,27 @@ sf::Vector2f SceneNode::getWorldPosition() const
     return getWorldTransform().transformPoint({ 0.f, 0.f });
 }
 
+unsigned int SceneNode::getCategory() const
+{
+    return Category::Scene;
+}
+
+
+void SceneNode::onCommand(const Command& command, sf::Time deltaTime)
+{
+    // on vérifie si la commande est pour le noeud courant
+    if (command.category & getCategory())
+    {
+        command.action(*this, deltaTime);
+    }
+
+    // Récursive sur les enfants
+    for (Ptr& child : mChildren)
+    {
+        child->onCommand(command, deltaTime);
+    }
+}
+
 void SceneNode::draw(
     sf::RenderTarget& target,
     sf::RenderStates states
@@ -91,9 +112,4 @@ void SceneNode::updateChildren(sf::Time deltaTime)
     {
         child->update(deltaTime);
     }
-}
-
-unsigned int SceneNode::getCategory() const
-{
-    return Category::Scene;
 }

@@ -12,13 +12,15 @@
  JJ-MM-AAAA     Nom                     Commentaire
  =========================================================
  14-06-2026     Benjamin Paquette       Ajout du scrolling
- 14-06-2026     Benjamin Paquette       ajout des limites du monde
+ 14-06-2026     Benjamin Paquette       Ajout des limites du monde
+ 15-06-2026     Benjamin Paquette       Ajout d'une CommandQueue
  ****************************************/
 #pragma once
 
 #include "Aircraft.hpp"
 #include "ResourceTypes.hpp"
 #include "SceneNode.hpp"
+#include "CommandQueue.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <array>
@@ -33,6 +35,7 @@ public:
     void draw();
 
     void setPlayerVelocity(sf::Vector2f velocity);
+    CommandQueue& getCommandQueue();
 
 private:
 
@@ -57,6 +60,7 @@ private:
     SceneNode mSceneGraph;
 
     std::array<SceneNode*, static_cast<std::size_t>(Layer::LayerCount)> mSceneLayers{};
+    CommandQueue mCommandQueue;
 
     sf::FloatRect mWorldBounds;
     sf::Vector2f mSpawnPosition;

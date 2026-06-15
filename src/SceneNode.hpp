@@ -14,9 +14,11 @@
  12-06-2026     Benjamin Paquette       Ajout de méthodes pour déssiner un parent avant les enfants
  12-06-2026     Benjamin Paquette       Méthodes pour mettre à jour les objets
  15-06-2026     Benjamin Paquette       Ajout de méthodes pour avoir la transformation global
+ 15-06-2026     Benjamin Paquette       Ajout de la gestion des command : recevoir et transmettre
  ****************************************/
 #pragma once
 #include "Category.hpp"
+#include "Command.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -38,6 +40,7 @@ public:
     sf::Transform getWorldTransform() const;
     sf::Vector2f getWorldPosition() const;
     virtual unsigned int getCategory() const;
+    void onCommand(const Command& command, sf::Time deltaTime);
 
 private:
     // Attributs
