@@ -49,9 +49,15 @@ void World::buildScene()
     const sf::Texture& desertTexture = mTextures.get(Textures::ID::Desert);
     const sf::Vector2u textureSize = desertTexture.getSize();
 
+    // calcul pour que la texture du desert est la bonne taille
+    const float scale = ViewWidth / static_cast<float>(textureSize.x);
+    const float scaledTextureHeight = static_cast<float>(textureSize.y) * scale;
+
     for (float y = 0.f; y < WorldHeight; y += static_cast<float>(textureSize.y))
     {
         auto background = std::make_unique<SpriteNode>(desertTexture);
+
+        background->setScale({ scale, scale });
 
         background->setPosition({
             ViewWidth / 2.f,
