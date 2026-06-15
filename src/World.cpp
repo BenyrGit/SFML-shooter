@@ -4,6 +4,10 @@
 namespace
 {
     constexpr float ScrollSpeed = -50.f;
+
+    constexpr float ViewWidth = 1024.f;
+    constexpr float ViewHeight = 768.f;
+    constexpr float WorldHeight = 3000.f;
 }
 
 World::World(sf::RenderWindow& window)
@@ -15,6 +19,8 @@ World::World(sf::RenderWindow& window)
 {
     loadTextures();
     buildScene();
+
+    mWorldView.setCenter({ ViewWidth / 2.f, WorldHeight - ViewHeight / 2.f });
 }
 
 void World::loadTextures()
@@ -40,14 +46,24 @@ void World::buildScene()
     }
 
     // Background
-    auto background = std::make_unique<SpriteNode>(mTextures.get(Textures::ID::Desert));
-    background->setPosition({ 512.f, 384.f });
+    const sf::Texture& desertTexture = mTextures.get(Textures::ID::Desert);
+    const sf::Vector2u textureSize = desertTexture.getSize();
 
-    mSceneLayers[toIndex(Layer::Background)]->attachChild(std::move(background));
+    for (float y = 0.f; y < WorldHeight; y += static_cast<float>(textureSize.y))
+    {
+        auto background = std::make_unique<SpriteNode>(desertTexture);
+
+        background->setPosition({
+            ViewWidth / 2.f,
+            y + static_cast<float>(textureSize.y) / 2.f
+            });
+
+        mSceneLayers[toIndex(Layer::Background)]->attachChild(std::move(background));
+    }
 
     // Joueur
     auto player = std::make_unique<Aircraft>(Aircraft::Type::Eagle, mTextures);
-    player->setPosition({ 512.f, 384.f });
+    player->setPosition({ ViewWidth / 2.f, WorldHeight - ViewHeight / 4.f });
 
     mPlayerAircraft = player.get();
 
@@ -58,7 +74,10 @@ void World::buildScene()
 void World::update(sf::Time deltaTime)
 {
     // scrolling de la camera
-    mWorldView.move({ 0.f, ScrollSpeed * deltaTime.asSeconds() });
+    if (mWorldView.getCenter().y > ViewHeight / 2.f)
+    {
+        mWorldView.move({ 0.f, ScrollSpeed * deltaTime.asSeconds() });
+    }
 
     mSceneGraph.update(deltaTime);
 
