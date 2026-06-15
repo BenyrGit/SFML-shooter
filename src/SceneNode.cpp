@@ -92,3 +92,8 @@ void SceneNode::updateChildren(sf::Time deltaTime)
         child->update(deltaTime);
     }
 }
+
+unsigned int SceneNode::getCategory() const
+{
+    return Category::Scene;
+}

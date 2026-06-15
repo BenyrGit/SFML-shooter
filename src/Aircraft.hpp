@@ -1,3 +1,18 @@
+/****************************************
+ Fichier		:	Aircraft.hpp
+ Auteur			:	Benjamin Paquette
+ Fonctionnalité :	Classe qui gère les objets avion
+ Date			:	13-06-2026
+
+ Vérification	:
+ JJ-MM-AAAA     Nom                     Approuvé
+ =========================================================
+
+ Historique de modifications :
+ JJ-MM-AAAA     Nom                     Commentaire
+ =========================================================
+ 
+ ****************************************/
 #pragma once
 
 #include "Entity.hpp"
@@ -18,6 +33,7 @@ public:
     Aircraft(Type type, const TextureHolder& textures);
 
     sf::FloatRect getBoundingRect() const;
+    unsigned int getCategory() const override;
 
 private:
     // Méthodes

@@ -48,3 +48,17 @@ void Aircraft::drawCurrent(
 {
     target.draw(mSprite, states);
 }
+
+unsigned int Aircraft::getCategory() const
+{
+    switch (mType)
+    {
+    case Type::Eagle:
+        return Category::PlayerAircraft;
+
+    case Type::Raptor:
+        return Category::AlliedAircraft;
+    }
+
+    return Category::None;
+}

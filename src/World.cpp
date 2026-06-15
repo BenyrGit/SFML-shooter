@@ -15,7 +15,7 @@ World::World(sf::RenderWindow& window)
     , mSceneGraph()
     , mSceneLayers()
     , mWorldBounds({ 0.f, 0.f }, { ViewWidth, WorldHeight })                // Monde commence à { 0, 0} et mesure { 1024, 3000 }
-    , mSpawnPosition({ ViewWidth / 2.f, WorldHeight - ViewHeight / 4.f })   // Posiont de départ du joueur    
+    , mSpawnPosition({ ViewWidth / 2.f, WorldHeight - ViewHeight / 4.f })   // Position de départ du joueur    
     , mScrollSpeed(-50.f)
     , mPlayerAircraft(nullptr)
 {

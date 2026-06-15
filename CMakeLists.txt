@@ -25,6 +25,8 @@ add_executable(SFMLGame
     src/Aircraft.hpp
     src/World.cpp
     src/World.hpp
+    src/Category.hpp
+    src/Command.hpp
 )
 
 target_link_libraries(SFMLGame PRIVATE

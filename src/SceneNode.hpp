@@ -16,6 +16,7 @@
  15-06-2026     Benjamin Paquette       Ajout de méthodes pour avoir la transformation global
  ****************************************/
 #pragma once
+#include "Category.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -27,6 +28,7 @@ class SceneNode : public sf::Transformable, public sf::Drawable
 public:
     // Allias
     using Ptr = std::unique_ptr<SceneNode>;
+    
 
     // Méthodes
     virtual ~SceneNode() = default;
@@ -35,8 +37,13 @@ public:
     void update(sf::Time deltaTime);
     sf::Transform getWorldTransform() const;
     sf::Vector2f getWorldPosition() const;
+    virtual unsigned int getCategory() const;
 
 private:
+    // Attributs
+    std::vector<Ptr>    mChildren;
+    SceneNode* mParent = nullptr;
+
     // Méthodes
     virtual void updateCurrent(sf::Time deltaTime);
     void updateChildren(sf::Time deltaTime);
@@ -45,9 +52,4 @@ private:
     void drawChildren(sf::RenderTarget& target, sf::RenderStates states) const;
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-  
-
-    // Attributs
-    std::vector<Ptr>    mChildren;
-    SceneNode*          mParent = nullptr;
 };
