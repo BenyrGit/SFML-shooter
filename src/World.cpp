@@ -3,8 +3,6 @@
 
 namespace
 {
-    constexpr float ScrollSpeed = -50.f;
-
     constexpr float ViewWidth = 1024.f;
     constexpr float ViewHeight = 768.f;
     constexpr float WorldHeight = 3000.f;
@@ -15,6 +13,10 @@ World::World(sf::RenderWindow& window)
     , mWorldView(window.getDefaultView())
     , mTextures()
     , mSceneGraph()
+    , mSceneLayers()
+    , mWorldBounds({ 0.f, 0.f }, { ViewWidth, WorldHeight })                // Monde commence à { 0, 0} et mesure { 1024, 3000 }
+    , mSpawnPosition({ ViewWidth / 2.f, WorldHeight - ViewHeight / 4.f })   // Posiont de départ du joueur    
+    , mScrollSpeed(-50.f)
     , mPlayerAircraft(nullptr)
 {
     loadTextures();
@@ -50,18 +52,18 @@ void World::buildScene()
     const sf::Vector2u textureSize = desertTexture.getSize();
 
     // calcul pour que la texture du desert est la bonne taille
-    const float scale = ViewWidth / static_cast<float>(textureSize.x);
+    const float scale = mWorldBounds.size.x / static_cast<float>(textureSize.x);
     const float scaledTextureHeight = static_cast<float>(textureSize.y) * scale;
 
-    for (float y = 0.f; y < WorldHeight; y += static_cast<float>(textureSize.y))
+    for (float y = 0.f; y < mWorldBounds.size.y; y += static_cast<float>(textureSize.y))
     {
         auto background = std::make_unique<SpriteNode>(desertTexture);
 
         background->setScale({ scale, scale });
 
         background->setPosition({
-            ViewWidth / 2.f,
-            y + static_cast<float>(textureSize.y) / 2.f
+            mWorldBounds.size.x / 2.f,
+            y + scaledTextureHeight / 2.f
             });
 
         mSceneLayers[toIndex(Layer::Background)]->attachChild(std::move(background));
@@ -69,7 +71,7 @@ void World::buildScene()
 
     // Joueur
     auto player = std::make_unique<Aircraft>(Aircraft::Type::Eagle, mTextures);
-    player->setPosition({ ViewWidth / 2.f, WorldHeight - ViewHeight / 4.f });
+    player->setPosition(mSpawnPosition);
 
     mPlayerAircraft = player.get();
 
@@ -80,9 +82,9 @@ void World::buildScene()
 void World::update(sf::Time deltaTime)
 {
     // scrolling de la camera
-    if (mWorldView.getCenter().y > ViewHeight / 2.f)
+    if (mWorldView.getCenter().y > mWorldBounds.position.y + mWorldView.getSize().y / 2.f)
     {
-        mWorldView.move({ 0.f, ScrollSpeed * deltaTime.asSeconds() });
+        mWorldView.move({ 0.f, mScrollSpeed * deltaTime.asSeconds() });
     }
 
     mSceneGraph.update(deltaTime);
@@ -98,7 +100,7 @@ void World::draw()
 
 void World::setPlayerVelocity(sf::Vector2f velocity)
 {
-    velocity.y += ScrollSpeed;
+    velocity.y += mScrollSpeed;
 
     mPlayerAircraft->setVelocity(velocity);
 }

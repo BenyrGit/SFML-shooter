@@ -11,7 +11,8 @@
  Historique de modifications :
  JJ-MM-AAAA     Nom                     Commentaire
  =========================================================
-           
+ 14-06-2026     Benjamin Paquette       Ajout du scrolling
+ 14-06-2026     Benjamin Paquette       ajout des limites du monde
  ****************************************/
 #pragma once
 
@@ -56,6 +57,10 @@ private:
     SceneNode mSceneGraph;
 
     std::array<SceneNode*, static_cast<std::size_t>(Layer::LayerCount)> mSceneLayers{};
+
+    sf::FloatRect mWorldBounds;
+    sf::Vector2f mSpawnPosition;
+    float mScrollSpeed = 0.f;
 
     Aircraft* mPlayerAircraft = nullptr;
 };
