@@ -64,8 +64,8 @@ unsigned int SceneNode::getCategory() const
 
 void SceneNode::onCommand(const Command& command, sf::Time deltaTime)
 {
-    // on vérifie si la commande est pour le noeud courant
-    if (command.category & getCategory())
+    // on vérifie si la commande est pour le noeud courant et que l'action n'est pas vide
+    if (command.category & getCategory() && command.action)
     {
         command.action(*this, deltaTime);
     }
