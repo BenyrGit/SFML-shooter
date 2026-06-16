@@ -137,3 +137,37 @@ void Player::handleRealtimeInput(CommandQueue& commands)
         }
     }
 }
+
+// Permet d'assigner une touche à une action
+void Player::assignKey(Action action, sf::Keyboard::Key key)
+{
+    for (auto itr = mKeyBinding.begin(); itr != mKeyBinding.end();)
+    {
+        // retire les touches associées à l'action en paramètre
+        if (itr->second == action)
+        {
+            itr = mKeyBinding.erase(itr);
+        }
+        else
+        {
+            ++itr;
+        }
+    }
+
+    // assigne la nouvelle touche
+    mKeyBinding[key] = action;
+}
+
+// Retourne la première touche trouvée pour une action
+sf::Keyboard::Key Player::getAssignedKey(Action action) const
+{
+    for (const auto& pair : mKeyBinding)
+    {
+        if (pair.second == action)
+        {
+            return pair.first;
+        }
+    }
+
+    return sf::Keyboard::Key::Unknown;
+}

@@ -12,6 +12,7 @@
  JJ-MM-AAAA     Nom                     Commentaire
  =========================================================
  16-06-2026     Benjamin Paquette       Ajout d'actions
+ 16-06-2026     Benjamin Paquette       Méthodes pour configurer les touches
  ****************************************/
 #pragma once
 
@@ -41,6 +42,9 @@ public:
 
     void handleEvent(const sf::Event& event, CommandQueue& commands);
     void handleRealtimeInput(CommandQueue& commands);
+
+    void assignKey(Action action, sf::Keyboard::Key key);
+    sf::Keyboard::Key getAssignedKey(Action action) const;
 
 private:
     // Méthodes
