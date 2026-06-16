@@ -13,10 +13,12 @@
  =========================================================
  12-06-2026     Benjamin                ajout de sceneNode
  13-06-2026     Benjamin                Transfert de la logique vers World
+ 15-06-2026     Benjamin                
  ****************************************/
 #pragma once
 
 #include "World.hpp"
+#include "Player.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -30,7 +32,6 @@ public:
 private:
     // Méthodes
     void processEvents();
-    void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 
     void update(sf::Time deltaTime);
     void render();
@@ -38,9 +39,5 @@ private:
     // Attributs
     sf::RenderWindow    mWindow;
     World mWorld;
-
-    bool mIsMovingUp    = false;
-    bool mIsMovingDown  = false;
-    bool mIsMovingLeft  = false;
-    bool mIsMovingRight = false;
+    Player mPlayer;
 };

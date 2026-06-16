@@ -29,7 +29,9 @@ add_executable(SFMLGame
     src/Command.hpp
     src/CommandQueue.cpp
     src/CommandQueue.hpp
-)
+    src/Player.cpp
+    src/Player.hpp
+    )
 
 target_link_libraries(SFMLGame PRIVATE
     SFML::Graphics

@@ -2,12 +2,6 @@
 #include <stdexcept>
 #include <string>
 
-// permet de déclarer des fonctions et variables locale. Temporaire
-namespace
-{
-    constexpr float PlayerSpeed = 300.f;
-}
-
 Game::Game()
     : mWindow(sf::VideoMode({ 1024u, 768u }), "SFML Shooter")
     ,mWorld(mWindow)
@@ -61,64 +55,21 @@ void Game::processEvents()
         }
         else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
         {
-            handlePlayerInput(keyPressed->code, true);
+            if (keyPressed->code == sf::Keyboard::Key::Escape)
+            {
+                mWindow.close();
+            }
         } 
-        else if (const auto* keyReleased = event->getIf<sf::Event::KeyReleased>())
-        {
-            handlePlayerInput(keyReleased->code, false);
-        }
+
+        mPlayer.handleEvent(*event, mWorld.getCommandQueue());
     }
 }
 
-void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed)
-{
-    if (key == sf::Keyboard::Key::Escape && isPressed)
-    {
-        mWindow.close();
-    }
-    else if (key == sf::Keyboard::Key::W  || key == sf::Keyboard::Key::Up)
-    {
-        mIsMovingUp = isPressed;
-    }
-    else if (key == sf::Keyboard::Key::S || key == sf::Keyboard::Key::Down)
-    {
-        mIsMovingDown = isPressed;
-    }
-    else if (key == sf::Keyboard::Key::A || key == sf::Keyboard::Key::Left)
-    {
-        mIsMovingLeft = isPressed;
-    }
-    else if (key == sf::Keyboard::Key::D || key == sf::Keyboard::Key::Right)
-    {
-        mIsMovingRight = isPressed;
-    } 
-}
 
 void Game::update(sf::Time deltaTime)
 {
-    sf::Vector2f movement{ 0.f, 0.f };
+    mPlayer.handleRealtimeInput(mWorld.getCommandQueue());
 
-    if (mIsMovingUp)
-    {
-        movement.y -= PlayerSpeed;
-    }
-
-    if (mIsMovingDown)
-    {
-        movement.y += PlayerSpeed;
-    }
-
-    if (mIsMovingLeft)
-    {
-        movement.x -= PlayerSpeed;
-    }
-
-    if (mIsMovingRight)
-    {
-        movement.x += PlayerSpeed;
-    }
-
-    mWorld.setPlayerVelocity(movement);
     mWorld.update(deltaTime);
 }
 

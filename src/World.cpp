@@ -88,6 +88,9 @@ void World::update(sf::Time deltaTime)
         mWorldView.move({ 0.f, mScrollSpeed * deltaTime.asSeconds() });
     }
 
+    // scrolling
+    mPlayerAircraft->setVelocity({ 0.f, mScrollSpeed });
+
     // Traite les commandes
     while (!mCommandQueue.isEmpty())
     {
@@ -105,12 +108,6 @@ void World::draw()
     mWindow.draw(mSceneGraph);
 }
 
-void World::setPlayerVelocity(sf::Vector2f velocity)
-{
-    velocity.y += mScrollSpeed;
-
-    mPlayerAircraft->setVelocity(velocity);
-}
 
 CommandQueue& World::getCommandQueue()
 {

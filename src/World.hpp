@@ -34,7 +34,6 @@ public:
     void update(sf::Time deltaTime);
     void draw();
 
-    void setPlayerVelocity(sf::Vector2f velocity);
     CommandQueue& getCommandQueue();
 
 private:
