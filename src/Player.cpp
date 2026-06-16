@@ -5,10 +5,8 @@ namespace
 {
     constexpr float PlayerSpeed = 300.f;
 
-    void accelerateAircraft(SceneNode& node, sf::Vector2f velocity, sf::Time deltaTime)
+    void accelerateAircraft(Aircraft& aircraft, sf::Vector2f velocity, sf::Time deltaTime)
     {
-        Aircraft& aircraft = static_cast<Aircraft&>(node);
-
         aircraft.accelerate(velocity);
     }
 }
@@ -27,34 +25,62 @@ Player::Player()
     mKeyBinding[sf::Keyboard::Key::S] = Action::MoveDown;
     mKeyBinding[sf::Keyboard::Key::Down] = Action::MoveDown;
 
+    mKeyBinding[sf::Keyboard::Key::Space] = Action::Fire;
+    mKeyBinding[sf::Keyboard::Key::M] = Action::LaunchMissile;
+
     initializeActions();
 }
 
+// derivedAction vient de Command.hpp
+// La fonction lie le comportement avec une action et définie leur categorie à Aircraft
 void Player::initializeActions()
 {
     mActionBinding[Action::MoveLeft].action =
-        [](SceneNode& node, sf::Time deltaTime)
-        {
-            accelerateAircraft(node, { -PlayerSpeed, 0.f }, deltaTime);
-        };
+        derivedAction<Aircraft>(
+            [](Aircraft& aircraft, sf::Time deltaTime)   
+            {
+                accelerateAircraft(aircraft, { -PlayerSpeed, 0.f }, deltaTime);
+            }
+        );
 
     mActionBinding[Action::MoveRight].action =
-        [](SceneNode& node, sf::Time deltaTime)
-        {
-            accelerateAircraft(node, { PlayerSpeed, 0.f }, deltaTime);
-        };
+        derivedAction<Aircraft>(
+            [](Aircraft& aircraft, sf::Time deltaTime)
+            {
+                accelerateAircraft(aircraft, { PlayerSpeed, 0.f }, deltaTime);
+            }
+        );
 
     mActionBinding[Action::MoveUp].action =
-        [](SceneNode& node, sf::Time deltaTime)
-        {
-            accelerateAircraft(node, { 0.f, -PlayerSpeed }, deltaTime);
-        };
+        derivedAction<Aircraft>(
+            [](Aircraft& aircraft, sf::Time deltaTime)
+            {
+                accelerateAircraft(aircraft, { 0.f, -PlayerSpeed }, deltaTime);
+            }
+        );
 
     mActionBinding[Action::MoveDown].action =
-        [](SceneNode& node, sf::Time deltaTime)
-        {
-            accelerateAircraft(node, { 0.f, PlayerSpeed }, deltaTime);
-        };
+        derivedAction<Aircraft>(
+            [](Aircraft& aircraft, sf::Time deltaTime)
+            {
+                accelerateAircraft(aircraft, { 0.f, PlayerSpeed }, deltaTime);
+            }
+        );
+    mActionBinding[Action::Fire].action =
+        derivedAction<Aircraft>(
+            [](Aircraft& aircraft, sf::Time)
+            {
+                // Temporaire : les projectiles seront ajoutés plus tard.
+            }
+        );
+
+    mActionBinding[Action::LaunchMissile].action =
+        derivedAction<Aircraft>(
+            [](Aircraft& aircraft, sf::Time)
+            {
+                // Temporaire : les missiles seront ajoutés plus tard.
+            }
+        );
 
     for (auto& pair : mActionBinding)
     {
@@ -62,18 +88,52 @@ void Player::initializeActions()
     }
 }
 
-void Player::handleEvent(const sf::Event& event, CommandQueue& commands)
+// Les déplacements sont envoyées tant que la touche est maintenue
+bool Player::isRealtimeAction(Action action)
 {
-    // Plus tard : tirer, lancer un missile, pause, etc.
+    switch (action)
+    {
+    case Action::MoveLeft:
+    case Action::MoveRight:
+    case Action::MoveUp:
+    case Action::MoveDown:
+        return true;
+
+    case Action::Fire:
+    case Action::LaunchMissile:
+        return false;
+    }
+
+    return false;
 }
 
+// fonction pour gérer les actions ponctuelles
+void Player::handleEvent(const sf::Event& event, CommandQueue& commands)
+{
+    if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
+    {
+        // On vérifie si la touche pressée est associées à une action
+        const auto found = mKeyBinding.find(keyPressed->code);
+
+        //                                et que l'action est ponctuelle
+        if (found != mKeyBinding.end() && !isRealtimeAction(found->second))
+        {
+            commands.push(mActionBinding[found->second]);
+        }
+    }
+}
+
+// fonction pour gérer les actions continues : déplacements
 void Player::handleRealtimeInput(CommandQueue& commands)
 {
     for (const auto& pair : mKeyBinding)
     {
-        if (sf::Keyboard::isKeyPressed(pair.first))
+        const sf::Keyboard::Key key = pair.first;
+        const Action action = pair.second;
+
+        if (sf::Keyboard::isKeyPressed(key) && isRealtimeAction(action))
         {
-            commands.push(mActionBinding[pair.second]);
+            commands.push(mActionBinding[action]);
         }
     }
 }

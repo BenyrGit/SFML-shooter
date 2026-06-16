@@ -11,7 +11,7 @@
  Historique de modifications :
  JJ-MM-AAAA     Nom                     Commentaire
  =========================================================
-
+ 16-06-2026     Benjamin Paquette       Ajout d'actions
  ****************************************/
 #pragma once
 
@@ -31,7 +31,9 @@ public:
         MoveLeft,
         MoveRight,
         MoveUp,
-        MoveDown
+        MoveDown,
+        Fire,
+        LaunchMissile
     };
 
 public:
@@ -41,9 +43,11 @@ public:
     void handleRealtimeInput(CommandQueue& commands);
 
 private:
+    // Méthodes
     void initializeActions();
+    static bool isRealtimeAction(Action action);
 
-private:
+    // Attributs
     std::map<sf::Keyboard::Key, Action> mKeyBinding;
     std::map<Action, Command> mActionBinding;
 };

@@ -33,10 +33,12 @@ struct Command
 template <typename GameObject, typename Function>
 std::function<void(SceneNode&, sf::Time)> derivedAction(Function function)
 {
+    // on retourne une lambda compatible avec Command::action
     return [=](SceneNode& node, sf::Time deltaTime)
         {
             assert(dynamic_cast<GameObject*>(&node) != nullptr);
 
+            // on convertit le node vers le bon type et on exécute l'action
             function(static_cast<GameObject&>(node), deltaTime);
         };
 }
