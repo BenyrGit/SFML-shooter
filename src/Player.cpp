@@ -5,11 +5,11 @@ namespace
 {
     constexpr float PlayerSpeed = 300.f;
 
-    void moveAircraft(SceneNode& node, sf::Vector2f velocity, sf::Time deltaTime)
+    void accelerateAircraft(SceneNode& node, sf::Vector2f velocity, sf::Time deltaTime)
     {
         Aircraft& aircraft = static_cast<Aircraft&>(node);
 
-        aircraft.setVelocity(velocity);
+        aircraft.accelerate(velocity);
     }
 }
 
@@ -35,25 +35,25 @@ void Player::initializeActions()
     mActionBinding[Action::MoveLeft].action =
         [](SceneNode& node, sf::Time deltaTime)
         {
-            moveAircraft(node, { -PlayerSpeed, 0.f }, deltaTime);
+            accelerateAircraft(node, { -PlayerSpeed, 0.f }, deltaTime);
         };
 
     mActionBinding[Action::MoveRight].action =
         [](SceneNode& node, sf::Time deltaTime)
         {
-            moveAircraft(node, { PlayerSpeed, 0.f }, deltaTime);
+            accelerateAircraft(node, { PlayerSpeed, 0.f }, deltaTime);
         };
 
     mActionBinding[Action::MoveUp].action =
         [](SceneNode& node, sf::Time deltaTime)
         {
-            moveAircraft(node, { 0.f, -PlayerSpeed }, deltaTime);
+            accelerateAircraft(node, { 0.f, -PlayerSpeed }, deltaTime);
         };
 
     mActionBinding[Action::MoveDown].action =
         [](SceneNode& node, sf::Time deltaTime)
         {
-            moveAircraft(node, { 0.f, PlayerSpeed }, deltaTime);
+            accelerateAircraft(node, { 0.f, PlayerSpeed }, deltaTime);
         };
 
     for (auto& pair : mActionBinding)
