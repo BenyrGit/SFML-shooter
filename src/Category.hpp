@@ -9,6 +9,15 @@ namespace Category
         Scene = 1 << 0,
         PlayerAircraft = 1 << 1,
         AlliedAircraft = 1 << 2,
-        EnemyAircraft = 1 << 3
+        EnemyAircraft = 1 << 3,
+        Projectile = 1 << 4
     };
+
+    // Vérifie que l'objet est de la bonne catégorie
+    inline bool matchesCategories(
+        unsigned int objectCategory,
+        unsigned int commandCategory)
+    {
+        return (objectCategory & commandCategory) != 0;
+    }
 }
