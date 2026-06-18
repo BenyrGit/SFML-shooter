@@ -11,7 +11,7 @@
  Historique de modifications :
  JJ-MM-AAAA     Nom                     Commentaire
  =========================================================
- 
+ 18-06-2026     Benjamin Paquette       Ajout de méthodes pour tirer et lancer des missiles
  ****************************************/
 #pragma once
 
@@ -35,6 +35,9 @@ public:
     sf::FloatRect getBoundingRect() const;
     unsigned int getCategory() const override;
 
+    void fire();
+    void launchMissile();
+
 private:
     // Méthodes
     void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -42,4 +45,7 @@ private:
     // Attributs
     Type mType;
     sf::Sprite mSprite;
+
+    bool mIsFiring = false;
+    bool mIsLauchingMissile = false;
 };

@@ -67,14 +67,26 @@ void Player::initializeActions()
             }
         );
 
+    mActionBinding[Action::Fire].action =
+        derivedAction<Aircraft>(
+            [](Aircraft& aircraft, sf::Time deltaTime)
+            {
+                aircraft.fire();
+            }
+        );
+
+    mActionBinding[Action::LaunchMissile].action =
+        derivedAction<Aircraft>(
+            [](Aircraft& aircraft, sf::Time deltaTime)
+            {
+                aircraft.launchMissile();
+            }
+        );
+
     for (auto& pair : mActionBinding)
     {
         pair.second.category = Category::PlayerAircraft;
     }
-
-    // On lit les commandes, mais pour l'instant l'action n'est pas définie 
-    mActionBinding[Action::Fire].category = Category::PlayerAircraft;
-    mActionBinding[Action::LaunchMissile].category = Category::PlayerAircraft;
 }
 
 // Les déplacements sont envoyées tant que la touche est maintenue

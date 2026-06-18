@@ -1,4 +1,5 @@
 #include "Aircraft.hpp"
+#include <iostream>
 
 namespace
 {
@@ -61,4 +62,14 @@ unsigned int Aircraft::getCategory() const
     }
 
     return Category::None;
+}
+
+void Aircraft::fire() 
+{
+    mIsFiring = true;
+}
+
+void Aircraft::launchMissile() 
+{
+    mIsLauchingMissile = true;
 }
