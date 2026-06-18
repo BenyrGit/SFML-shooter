@@ -6,6 +6,8 @@ Game::Game()
     : mWindow(sf::VideoMode({ 1024u, 768u }), "SFML Shooter")
     ,mWorld(mWindow)
 {
+    // désactive la répittion d'une touche quand maintenue
+    mWindow.setKeyRepeatEnabled(false);
     mWindow.setFramerateLimit(60);
 }
 
