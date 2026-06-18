@@ -73,3 +73,19 @@ void Aircraft::launchMissile()
 {
     mIsLauchingMissile = true;
 }
+
+bool Aircraft::isFiring() const
+{
+    return mIsFiring;
+}
+
+bool Aircraft::isLaunchingMissile() const
+{
+    return mIsLauchingMissile;
+}
+
+void Aircraft::resetActions()
+{
+    mIsFiring = false;
+    mIsLauchingMissile = false;
+}

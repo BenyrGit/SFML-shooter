@@ -38,6 +38,11 @@ public:
     void fire();
     void launchMissile();
 
+    bool isFiring() const;
+    bool isLaunchingMissile() const;
+
+    void resetActions();
+
 private:
     // Méthodes
     void drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const override;
