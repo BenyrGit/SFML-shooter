@@ -31,6 +31,11 @@ add_executable(SFMLGame
     src/CommandQueue.hpp
     src/Player.cpp
     src/Player.hpp
+    src/State.cpp
+    src/State.hpp
+    src/StateIdentifiers.hpp
+    src/StateStack.cpp
+    src/StateStack.hpp
     )
 
 target_link_libraries(SFMLGame PRIVATE
