@@ -42,7 +42,7 @@ add_executable(SFMLGame
     src/TitleState.hpp
     src/MenuState.cpp
     src/MenuState.hpp
-    )
+     "src/PauseState.cpp")
 
 target_link_libraries(SFMLGame PRIVATE
     SFML::Graphics
