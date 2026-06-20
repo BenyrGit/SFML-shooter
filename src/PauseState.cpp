@@ -21,7 +21,7 @@ PauseState::PauseState(StateStack& stack, Context context)
     , mPausedText(context.fonts->get(Fonts::ID::Main), "Pause", 70)
     , mInstructionText(
         context.fonts->get(Fonts::ID::Main),
-        "Appuie sur Echap pour reprendre\nAppuie sur Backspace pour retourner au menu",
+        "Appuie sur Echap pour reprendre\nAppuie sur Retour pour retourner au menu",
         28
     )
 {

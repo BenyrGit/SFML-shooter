@@ -24,6 +24,16 @@ bool GameState::update(sf::Time deltaTime)
 
 bool GameState::handleEvent(const sf::Event& event)
 {
+    // Pause 
+    if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
+    {
+        if (keyPressed->code == sf::Keyboard::Key::Escape)
+        {
+            requestStackPush(States::ID::Pause);
+            return false;
+        }
+    }
+    
     mPlayer->handleEvent(event, mWorld.getCommandQueue());
 
     return true;

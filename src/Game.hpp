@@ -17,6 +17,7 @@
  19-06-2026     Benjamin                Ajout des états
  20-06-2026     Benjamin                Ajout de la police
  20-06-2026     Benjamin                Chargement du titre au lieu du gameplay
+ 20-06-2026     Benjamin                Gestion de la pause
  ****************************************/
 #pragma once
 

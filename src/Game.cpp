@@ -2,6 +2,7 @@
 #include "GameState.hpp"
 #include "TitleState.hpp"
 #include "MenuState.hpp"
+#include "PauseState.hpp"
 #include <stdexcept>
 #include <string>
 
@@ -72,13 +73,6 @@ void Game::processEvents()
         {
             mWindow.close();
         }
-        else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
-        {
-            if (keyPressed->code == sf::Keyboard::Key::Escape)
-            {
-                mWindow.close();
-            }
-        } 
 
         //donne les événements au stateStack qui les transfère ensuite au autres couches
         mStateStack.handleEvent(*event);
@@ -109,4 +103,5 @@ void Game::registerStates()
     mStateStack.registerState<TitleState>(States::ID::Title);
     mStateStack.registerState<MenuState>(States::ID::Menu);
     mStateStack.registerState<GameState>(States::ID::Game);
+    mStateStack.registerState<PauseState>(States::ID::Pause);
 }
