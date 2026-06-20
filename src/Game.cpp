@@ -1,14 +1,29 @@
 #include "Game.hpp"
+#include "GameState.hpp"
 #include <stdexcept>
 #include <string>
 
 Game::Game()
     : mWindow(sf::VideoMode({ 1024u, 768u }), "SFML Shooter")
-    ,mWorld(mWindow)
+    , mTextures()
+    , mFonts()
+    , mPlayer()
+    , mStateStack(State::Context{
+        &mWindow,
+        &mTextures,
+        &mFonts,
+        &mPlayer
+    })
 {
     // désactive la répittion d'une touche quand maintenue
     mWindow.setKeyRepeatEnabled(false);
     mWindow.setFramerateLimit(60);
+
+    mFonts.load(Fonts::ID::Main, "assets/fonts/OpenSans.ttf");
+
+    registerStates();
+
+    mStateStack.pushState(States::ID::Title);
 }
 
 void Game::run()
@@ -63,22 +78,31 @@ void Game::processEvents()
             }
         } 
 
-        mPlayer.handleEvent(*event, mWorld.getCommandQueue());
+        //donne les événements au stateStack qui les transfère ensuite au autres couches
+        mStateStack.handleEvent(*event);
     }
 }
 
 
 void Game::update(sf::Time deltaTime)
 {
-    mPlayer.handleRealtimeInput(mWorld.getCommandQueue());
+    mStateStack.update(deltaTime);
 
-    mWorld.update(deltaTime);
+    if (mStateStack.isEmpty())
+    {
+        mWindow.close();
+    }
+   
 }
 
 void Game::render()
 {
     mWindow.clear();
-    mWorld.draw();
+    mStateStack.draw();
     mWindow.display();
 }
 
+void Game::registerStates()
+{
+    mStateStack.registerState<GameState>(States::ID::Game);
+}

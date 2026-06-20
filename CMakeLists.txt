@@ -36,7 +36,9 @@ add_executable(SFMLGame
     src/StateIdentifiers.hpp
     src/StateStack.cpp
     src/StateStack.hpp
-    )
+    src/GameState.cpp
+    src/GameState.hpp
+     "src/TitleState.cpp")
 
 target_link_libraries(SFMLGame PRIVATE
     SFML::Graphics
