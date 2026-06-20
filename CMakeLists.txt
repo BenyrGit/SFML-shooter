@@ -40,6 +40,8 @@ add_executable(SFMLGame
     src/GameState.hpp
     src/TitleState.cpp
     src/TitleState.hpp
+    src/MenuState.cpp
+    src/MenuState.hpp
     )
 
 target_link_libraries(SFMLGame PRIVATE
