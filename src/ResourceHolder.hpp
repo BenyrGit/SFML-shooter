@@ -12,6 +12,7 @@
  JJ-MM-AAAA     Nom                     Commentaire
  =========================================================
  11-09-2026     Benjamin                Surcharge de load
+ 20-06-2026     Benjamin                Ajout de la gestion de font SFML 3.0 : loadResourceFromFile
  ****************************************/
 #pragma once
 
@@ -21,6 +22,34 @@
 #include <stdexcept>
 #include <string>
 #include <utility>
+
+namespace Detail
+{
+    template <typename>
+    inline constexpr bool AlwaysFalse = false;
+
+    template <typename Resource, typename... Args>
+    bool loadResourceFromFile(Resource& resource, const std::string& filename, Args&&... args)
+    {
+        // Vérifie si la ressource possède loadFromFile : Texture
+        if constexpr (requires { resource.loadFromFile(filename, std::forward<Args>(args)...); })
+        {
+            return resource.loadFromFile(filename, std::forward<Args>(args)...);
+        }
+        // Vérifie si la ressource possède openFromFile : Fonts
+        else if constexpr (requires { resource.openFromFile(filename, std::forward<Args>(args)...); })
+        {
+            return resource.openFromFile(filename, std::forward<Args>(args)...);
+        }
+        else
+        {
+            static_assert(
+                AlwaysFalse<Resource>,
+                "Cette ressource ne possède ni loadFromFile(), ni openFromFile()."
+                );
+        }
+    }
+}
 
 template <typename Resource, typename Identifier>
 class ResourceHolder
@@ -45,7 +74,7 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string
 {
     auto resource = std::make_unique<Resource>();
 
-    if (!resource->loadFromFile(filename))
+    if (!Detail::loadResourceFromFile(*resource, filename))
     {
         throw std::runtime_error("ResourceHolder::load - Impossible de charger " + filename);
     }
@@ -64,7 +93,7 @@ void ResourceHolder<Resource, Identifier>::load(
 {
     auto resource = std::make_unique<Resource>();
 
-    if (!resource->loadFromFile(filename, std::forward<Args>(args)...))
+    if (!Detail::loadResourceFromFile(*resource, filename, std::forward<Args>(args)...))
     {
         throw std::runtime_error("ResourceHolder::load - Impossible de charger " + filename);
     }

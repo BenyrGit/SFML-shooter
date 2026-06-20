@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include "GameState.hpp"
+#include "TitleState.hpp"
 #include <stdexcept>
 #include <string>
 
@@ -104,5 +105,6 @@ void Game::render()
 
 void Game::registerStates()
 {
+    mStateStack.registerState<TitleState>(States::ID::Title);
     mStateStack.registerState<GameState>(States::ID::Game);
 }
