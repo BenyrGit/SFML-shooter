@@ -3,6 +3,7 @@
 #include "TitleState.hpp"
 #include "MenuState.hpp"
 #include "PauseState.hpp"
+#include "LoadingState.hpp"
 #include <stdexcept>
 #include <string>
 
@@ -102,6 +103,7 @@ void Game::registerStates()
 {
     mStateStack.registerState<TitleState>(States::ID::Title);
     mStateStack.registerState<MenuState>(States::ID::Menu);
+    mStateStack.registerState<LoadingState>(States::ID::Loading);
     mStateStack.registerState<GameState>(States::ID::Game);
     mStateStack.registerState<PauseState>(States::ID::Pause);
 }

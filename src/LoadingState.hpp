@@ -30,5 +30,5 @@ public:
 
 private:
     sf::Text mLoadingText;
-    bool mGameStateCreated = false;
+    bool mGameStateCreated = false;     // pour être évité de demandé plusieurs foit l'état Game
 };
