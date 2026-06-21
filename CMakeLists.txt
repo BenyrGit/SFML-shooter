@@ -46,6 +46,8 @@ add_executable(SFMLGame
     src/PauseState.hpp
     src/LoadingState.cpp
     src/LoadingState.hpp
+    src/Utility.cpp
+    src/Utility.hpp
  )
 
 target_link_libraries(SFMLGame PRIVATE

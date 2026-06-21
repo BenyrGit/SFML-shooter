@@ -1,19 +1,7 @@
 #include "MenuState.hpp"
+#include "Utility.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
-
-namespace
-{
-    void centerOrigin(sf::Text& text)
-    {
-        const sf::FloatRect bounds = text.getLocalBounds();
-
-        text.setOrigin({
-            bounds.position.x + bounds.size.x / 2.f,
-            bounds.position.y + bounds.size.y / 2.f
-            });
-    }
-}
 
 MenuState::MenuState(StateStack& stack, Context context)
     : State(stack, context)

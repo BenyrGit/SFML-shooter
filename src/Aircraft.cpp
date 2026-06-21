@@ -1,18 +1,9 @@
 #include "Aircraft.hpp"
+#include "Utility.hpp"
 #include <iostream>
 
 namespace
 {
-    void centerOrigin(sf::Sprite& sprite)
-    {
-        const sf::FloatRect bounds = sprite.getLocalBounds();
-
-        sprite.setOrigin({
-            bounds.position.x + bounds.size.x / 2.f,
-            bounds.position.y + bounds.size.y / 2.f
-            });
-    }
-
     // Convertit l'avion en texture. 
     const sf::Texture& toTexture(Aircraft::Type type, const TextureHolder& textures)
     {

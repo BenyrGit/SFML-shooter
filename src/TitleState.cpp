@@ -1,19 +1,7 @@
 #include "TitleState.hpp"
+#include "Utility.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
-
-namespace
-{
-    void centerOrigin(sf::Text& text)
-    {
-        const sf::FloatRect bounds = text.getLocalBounds();
-
-        text.setOrigin({
-            bounds.position.x + bounds.size.x / 2.f,
-            bounds.position.y + bounds.size.y / 2.f
-            });
-    }
-}
 
 TitleState::TitleState(StateStack& stack, Context context)
     : State(stack, context)
