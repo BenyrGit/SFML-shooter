@@ -50,6 +50,10 @@ add_executable(SFMLGame
     src/Utility.hpp
     src/Component.cpp
     src/Component.hpp
+    src/Container.cpp
+    src/Container.hpp
+    src/Button.cpp
+    src/Button.hpp
  )
 
 target_link_libraries(SFMLGame PRIVATE
