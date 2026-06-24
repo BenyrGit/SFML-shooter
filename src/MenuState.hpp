@@ -15,11 +15,8 @@
  ****************************************/
 #pragma once
 
+#include "Container.hpp"
 #include "State.hpp"
-
-#include <SFML/Graphics/Text.hpp>
-
-#include <vector>
 
 class MenuState : public State
 {
@@ -31,9 +28,5 @@ public:
     bool handleEvent(const sf::Event& event) override;
 
 private:
-    void updateOptionText();
-
-private:
-    std::vector<sf::Text> mOptions;
-    std::size_t mOptionIndex = 0;
+    GUI::Container mGUIContainer;
 };
