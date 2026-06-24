@@ -48,6 +48,8 @@ add_executable(SFMLGame
     src/LoadingState.hpp
     src/Utility.cpp
     src/Utility.hpp
+    src/Component.cpp
+    src/Component.hpp
  )
 
 target_link_libraries(SFMLGame PRIVATE
