@@ -11,7 +11,7 @@
  Historique de modifications :
  JJ-MM-AAAA     Nom                     Commentaire
  =========================================================
-
+ 24-06-20226    Benjamin                Ajout de composant : label et boutons
  ****************************************/
 #pragma once
 

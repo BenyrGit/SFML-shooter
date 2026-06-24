@@ -1,5 +1,6 @@
 #include "MenuState.hpp"
 #include "Button.hpp"
+#include "Label.hpp"
 #include "ResourceTypes.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -15,6 +16,18 @@ MenuState::MenuState(StateStack& stack, Context context)
         viewSize.x / 2.f,
         viewSize.y / 2.f
         });
+
+    // Label
+    auto titleLabel = std::make_unique<GUI::Label>(
+        "Menu principal",
+        font,
+        45
+    );
+
+    titleLabel->setPosition({ 0.f, -140.f });
+
+    mGUIContainer.pack(std::move(titleLabel));
+
 
     auto playButton = std::make_unique<GUI::Button>(font);
     playButton->setPosition({ 0.f, -45.f });
