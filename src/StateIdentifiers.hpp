@@ -11,7 +11,7 @@
  Historique de modifications :
  JJ-MM-AAAA     Nom                     Commentaire
  =========================================================
- 
+ 25-06-2026     Benjamin                Ajout de Settings
  ****************************************/
 #pragma once
 
@@ -24,6 +24,7 @@ namespace States
         Menu,
         Game,
         Pause,
-        Loading
+        Loading,
+        Settings
     };
 }

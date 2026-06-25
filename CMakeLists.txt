@@ -56,7 +56,7 @@ add_executable(SFMLGame
     src/Button.hpp
     src/Label.cpp
     src/Label.hpp
- )
+  "src/SettingsState.cpp")
 
 target_link_libraries(SFMLGame PRIVATE
     SFML::Graphics

@@ -19,3 +19,40 @@ void centerOrigin(sf::Text& text)
         bounds.position.y + bounds.size.y / 2.f
         });
 }
+
+// Affiche les touches
+std::string toString(sf::Keyboard::Key key) 
+{
+    switch (key)
+    {
+    case sf::Keyboard::Key::A:
+        return "A";
+    case sf::Keyboard::Key::D:
+        return "D";
+    case sf::Keyboard::Key::W:
+        return "W";
+    case sf::Keyboard::Key::S:
+        return "S";
+
+    case sf::Keyboard::Key::Left:
+        return "Gauche";
+    case sf::Keyboard::Key::Right:
+        return "Droite";
+    case sf::Keyboard::Key::Up:
+        return "Haut";
+    case sf::Keyboard::Key::Down:
+        return "Bas";
+
+    case sf::Keyboard::Key::Space:
+        return "Espace";
+    case sf::Keyboard::Key::M:
+        return "M";
+    case sf::Keyboard::Key::Enter:
+        return "Entrée";
+    case sf::Keyboard::Key::Escape:
+        return "Échap";
+
+    default:
+        return "Touche inconnue";
+    }
+}
