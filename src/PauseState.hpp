@@ -11,14 +11,14 @@
  Historique de modifications :
  JJ-MM-AAAA     Nom                     Commentaire
  =========================================================
- 
+ 25-06-2026     Benjamin                Utilisation du GUI dans la pause
  ****************************************/
 #pragma once
 
+#include "Container.hpp"
 #include "State.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
-#include <SFML/Graphics/Text.hpp>
 
 class PauseState : public State
 {
@@ -31,6 +31,5 @@ public:
 
 private:
     sf::RectangleShape mBackgroundShape;
-    sf::Text mPausedText;
-    sf::Text mInstructionText;
+    GUI::Container mGuiContainer;
 };
