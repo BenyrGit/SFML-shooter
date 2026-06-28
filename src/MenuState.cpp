@@ -30,7 +30,7 @@ MenuState::MenuState(StateStack& stack, Context context)
 
 
     auto playButton = std::make_unique<GUI::Button>(font);
-    playButton->setPosition({ 0.f, -45.f });
+    playButton->setPosition({ 0.f, -70.f });
     playButton->setText("Jouer");
     playButton->setCallback([this]()
     {
@@ -38,8 +38,16 @@ MenuState::MenuState(StateStack& stack, Context context)
         requestStackPush(States::ID::Loading);
     });
 
+    auto settingsButton = std::make_unique<GUI::Button>(font);
+    settingsButton->setPosition({ 0.f, 10.f });
+    settingsButton->setText("Options");
+    settingsButton->setCallback([this]()
+    {   
+        requestStackPush(States::ID::Settings);
+    });
+
     auto exitButton = std::make_unique<GUI::Button>(font);
-    exitButton->setPosition({ 0.f, 45.f });
+    exitButton->setPosition({ 0.f, 90.f });
     exitButton->setText("Quitter");
     exitButton->setCallback([this]()
     {
@@ -47,6 +55,7 @@ MenuState::MenuState(StateStack& stack, Context context)
     });
 
     mGUIContainer.pack(std::move(playButton));
+    mGUIContainer.pack(std::move(settingsButton));
     mGUIContainer.pack(std::move(exitButton));
 }
 

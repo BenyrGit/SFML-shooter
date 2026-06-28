@@ -12,6 +12,7 @@
  JJ-MM-AAAA     Nom                     Commentaire
  =========================================================
  24-06-20226    Benjamin                Ajout de composant : label et boutons
+ 28-06-20226    Benjamin                Ajout du bouton options
  ****************************************/
 #pragma once
 
