@@ -33,6 +33,16 @@ std::string toString(sf::Keyboard::Key key)
         return "W";
     case sf::Keyboard::Key::S:
         return "S";
+    case sf::Keyboard::Key::Z:
+        return "Z";
+    case sf::Keyboard::Key::Q:
+        return "Q";
+    case sf::Keyboard::Key::E:
+        return "E";
+    case sf::Keyboard::Key::R:
+        return "R";
+    case sf::Keyboard::Key::F:
+        return "F";
 
     case sf::Keyboard::Key::Left:
         return "Gauche";

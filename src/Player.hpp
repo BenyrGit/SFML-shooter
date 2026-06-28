@@ -13,6 +13,7 @@
  =========================================================
  16-06-2026     Benjamin Paquette       Ajout d'actions
  16-06-2026     Benjamin Paquette       Méthodes pour configurer les touches
+ 28-06-2026     Benjamin Paquette       Méthode pour reset les touches au valeur par défaut
  ****************************************/
 #pragma once
 
@@ -46,9 +47,11 @@ public:
     void assignKey(Action action, sf::Keyboard::Key key);
     sf::Keyboard::Key getAssignedKey(Action action) const;
 
+    void resetKeyBindings();
 private:
     // Méthodes
     void initializeActions();
+    void initializeKeyBindings();
     static bool isRealtimeAction(Action action);
 
     // Attributs

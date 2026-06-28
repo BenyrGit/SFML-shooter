@@ -13,21 +13,7 @@ namespace
 
 Player::Player()
 {
-    mKeyBinding[sf::Keyboard::Key::A] = Action::MoveLeft;
-    mKeyBinding[sf::Keyboard::Key::Left] = Action::MoveLeft;
-
-    mKeyBinding[sf::Keyboard::Key::D] = Action::MoveRight;
-    mKeyBinding[sf::Keyboard::Key::Right] = Action::MoveRight;
-
-    mKeyBinding[sf::Keyboard::Key::W] = Action::MoveUp;
-    mKeyBinding[sf::Keyboard::Key::Up] = Action::MoveUp;
-
-    mKeyBinding[sf::Keyboard::Key::S] = Action::MoveDown;
-    mKeyBinding[sf::Keyboard::Key::Down] = Action::MoveDown;
-
-    mKeyBinding[sf::Keyboard::Key::Space] = Action::Fire;
-    mKeyBinding[sf::Keyboard::Key::M] = Action::LaunchMissile;
-
+    initializeKeyBindings();
     initializeActions();
 }
 
@@ -87,6 +73,24 @@ void Player::initializeActions()
     {
         pair.second.category = Category::PlayerAircraft;
     }
+}
+
+void Player::initializeKeyBindings()
+{
+    mKeyBinding[sf::Keyboard::Key::A] = Action::MoveLeft;
+    mKeyBinding[sf::Keyboard::Key::Left] = Action::MoveLeft;
+
+    mKeyBinding[sf::Keyboard::Key::D] = Action::MoveRight;
+    mKeyBinding[sf::Keyboard::Key::Right] = Action::MoveRight;
+
+    mKeyBinding[sf::Keyboard::Key::W] = Action::MoveUp;
+    mKeyBinding[sf::Keyboard::Key::Up] = Action::MoveUp;
+
+    mKeyBinding[sf::Keyboard::Key::S] = Action::MoveDown;
+    mKeyBinding[sf::Keyboard::Key::Down] = Action::MoveDown;
+
+    mKeyBinding[sf::Keyboard::Key::Space] = Action::Fire;
+    mKeyBinding[sf::Keyboard::Key::M] = Action::LaunchMissile;
 }
 
 // Les déplacements sont envoyées tant que la touche est maintenue
@@ -171,4 +175,10 @@ sf::Keyboard::Key Player::getAssignedKey(Action action) const
     }
 
     return sf::Keyboard::Key::Unknown;
+}
+
+void Player::resetKeyBindings()
+{
+    mKeyBinding.clear();
+    initializeKeyBindings();
 }

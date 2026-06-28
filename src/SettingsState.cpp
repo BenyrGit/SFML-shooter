@@ -61,8 +61,18 @@ SettingsState::SettingsState(StateStack& stack, Context context)
         mGUIContainer.pack(std::move(button));
     }
 
+    auto resetButton = std::make_unique<GUI::Button>(font);
+    resetButton->setPosition({ 0.f, 150.f });
+    resetButton->setText("Réinitialiser");
+    resetButton->setCallback([this]()
+        {
+            getContext().player->resetKeyBindings();
+            updateLabels();
+        });
+
+
     auto backButton = std::make_unique<GUI::Button>(font);
-    backButton->setPosition({ 0.f, 180.f });
+    backButton->setPosition({ 0.f, 230.f });
     backButton->setText("Retour");
     backButton->setCallback([this]()
     {
@@ -70,6 +80,7 @@ SettingsState::SettingsState(StateStack& stack, Context context)
         requestStackPush(States::ID::Menu);
     });
 
+    mGUIContainer.pack(std::move(resetButton));
     mGUIContainer.pack(std::move(backButton));
 
     updateLabels();
@@ -103,7 +114,7 @@ bool SettingsState::handleEvent(const sf::Event& event)
             updateLabels();
         }
 
-        return true;
+        return false;
     }
 
     if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
@@ -111,13 +122,14 @@ bool SettingsState::handleEvent(const sf::Event& event)
         if (keyPressed->code == sf::Keyboard::Key::Escape)
         {
             requestStackPop();
+            requestStackPush(States::ID::Menu);
             return false;
         }
     }
 
     mGUIContainer.handleEvent(event);
 
-    return true;
+    return false;
 }
 
 void SettingsState::updateLabels()
