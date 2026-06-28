@@ -65,9 +65,10 @@ SettingsState::SettingsState(StateStack& stack, Context context)
     backButton->setPosition({ 0.f, 180.f });
     backButton->setText("Retour");
     backButton->setCallback([this]()
-        {
-            requestStackPop();
-        });
+    {
+        requestStackPop();
+        requestStackPush(States::ID::Menu);
+    });
 
     mGUIContainer.pack(std::move(backButton));
 

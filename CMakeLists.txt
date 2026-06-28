@@ -46,6 +46,8 @@ add_executable(SFMLGame
     src/PauseState.hpp
     src/LoadingState.cpp
     src/LoadingState.hpp
+    src/SettingsState.cpp
+    src/SettingsState.hpp
     src/Utility.cpp
     src/Utility.hpp
     src/Component.cpp
@@ -56,7 +58,7 @@ add_executable(SFMLGame
     src/Button.hpp
     src/Label.cpp
     src/Label.hpp
-  "src/SettingsState.cpp")
+ )
 
 target_link_libraries(SFMLGame PRIVATE
     SFML::Graphics

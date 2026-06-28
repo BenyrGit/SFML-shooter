@@ -42,7 +42,8 @@ MenuState::MenuState(StateStack& stack, Context context)
     settingsButton->setPosition({ 0.f, 10.f });
     settingsButton->setText("Options");
     settingsButton->setCallback([this]()
-    {   
+    {
+        requestStackPop();
         requestStackPush(States::ID::Settings);
     });
 
