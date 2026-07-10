@@ -105,13 +105,24 @@ bool SettingsState::handleEvent(const sf::Event& event)
     {
         if (const auto* keyPressed = event.getIf<sf::Event::KeyPressed>())
         {
-            getContext().player->assignKey(
-                mBindingActions[mActionBindingIndex],
-                keyPressed->code
-            );
+            if (keyPressed->code == sf::Keyboard::Key::Escape)
+            {
+                mIsBinding = false;
+                updateLabels();
 
-            mIsBinding = false;
-            updateLabels();
+                return false;
+            }
+
+            if (isBindingKeyAllowed(keyPressed->code))
+            {
+                getContext().player->assignKey(
+                    mBindingActions[mActionBindingIndex],
+                    keyPressed->code
+                );
+
+                mIsBinding = false;
+                updateLabels();
+            }
         }
 
         return false;
@@ -149,5 +160,19 @@ void SettingsState::updateLabels()
         mBindingButtons[i]->setText(
             actionNames[i] + " : " + toString(key)
         );
+    }
+}
+
+bool SettingsState::isBindingKeyAllowed(sf::Keyboard::Key key) const
+{
+    switch (key)
+    {
+    case sf::Keyboard::Key::Unknown:
+    case sf::Keyboard::Key::Enter:
+    case sf::Keyboard::Key::Escape:
+        return false;
+
+    default:
+        return true;
     }
 }

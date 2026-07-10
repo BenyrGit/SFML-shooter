@@ -34,6 +34,7 @@ public:
 private:
 	// méthodes
 	void updateLabels();
+	bool isBindingKeyAllowed(sf::Keyboard::Key key) const;
 
 	// attributs
 	GUI::Container mGUIContainer;
