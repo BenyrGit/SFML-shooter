@@ -6,7 +6,7 @@
 namespace GUI
 {
     Label::Label(const std::string& text, const sf::Font& font, unsigned int characterSize)
-        : mText(font, text, characterSize)
+        : mText(font, toSfString(text), characterSize)
     {
         mText.setFillColor(sf::Color::White);
         centerOrigin(mText);
@@ -14,7 +14,7 @@ namespace GUI
 
     void Label::setText(const std::string& text)
     {
-        mText.setString(text);
+        mText.setString(toSfString(text));
         centerOrigin(mText);
     }
 

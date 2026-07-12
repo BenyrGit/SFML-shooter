@@ -66,3 +66,8 @@ std::string toString(sf::Keyboard::Key key)
         return "Touche inconnue";
     }
 }
+
+sf::String toSfString(const std::string& text)
+{
+    return sf::String::fromUtf8(text.begin(), text.end());
+}

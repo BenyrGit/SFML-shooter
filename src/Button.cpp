@@ -32,7 +32,7 @@ namespace GUI
 
     void Button::setText(const std::string& text)
     {
-        mText.setString(text);
+        mText.setString(toSfString(text));
         centerOrigin(mText);
         mText.setPosition({ 0.f, -4.f });
     }

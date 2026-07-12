@@ -11,7 +11,8 @@
  Historique de modifications :
  JJ-MM-AAAA     Nom                     Commentaire
  =========================================================
-
+ 10-07-2026		Benjamin Paquette		Sécuriser l'assignation des touches
+ 12-07-2026		Benjamin Paquette		Ajout d'informations contextuelles
  ****************************************/
 #pragma once
 
@@ -19,6 +20,7 @@
 #include "Container.hpp"
 #include "Player.hpp"
 #include "State.hpp"
+#include "Label.hpp"
 
 #include <array>
 
@@ -38,6 +40,7 @@ private:
 
 	// attributs
 	GUI::Container mGUIContainer;
+	GUI::Label* mInfoLabel = nullptr;
 
 	std::array<GUI::Button*, 4> mBindingButtons{};
 	std::array<Player::Action, 4> mBindingActions{};

@@ -23,6 +23,8 @@ SettingsState::SettingsState(StateStack& stack, Context context)
         viewSize.y / 2.f
         });
 
+
+    // Étiquette pour le titre
     auto titleLabel = std::make_unique<GUI::Label>(
         "Configuration des touches",
         font,
@@ -31,6 +33,17 @@ SettingsState::SettingsState(StateStack& stack, Context context)
     titleLabel->setPosition({ 0.f, -230.f });
 
     mGUIContainer.pack(std::move(titleLabel));
+
+    // Étiquette pour les infos contextuelles
+    auto infoLabel = std::make_unique<GUI::Label>(
+        "Sélectionne une action pous appuis sur 'Entrée'",
+        font,
+        22
+    );
+    infoLabel->setPosition({ 0.f, -185.f });
+
+    mInfoLabel = infoLabel.get();
+    mGUIContainer.pack(std::move(infoLabel));
 
     const std::array<std::string, 4> actionNames{
         "Gauche",
@@ -56,6 +69,11 @@ SettingsState::SettingsState(StateStack& stack, Context context)
                 mActionBindingIndex = i;
 
                 mBindingButtons[i]->setText("Appuie sur une touche...");
+
+                if (mInfoLabel != nullptr)
+                {
+                    mInfoLabel->setText("Appuie sur une nouvelle touche. Échap pour annuler.");
+                }
             });
 
         mGUIContainer.pack(std::move(button));
@@ -110,6 +128,11 @@ bool SettingsState::handleEvent(const sf::Event& event)
                 mIsBinding = false;
                 updateLabels();
 
+                if (mInfoLabel != nullptr)
+                {
+                    mInfoLabel->setText("Assignation annulée.");
+                }
+
                 return false;
             }
 
@@ -122,6 +145,18 @@ bool SettingsState::handleEvent(const sf::Event& event)
 
                 mIsBinding = false;
                 updateLabels();
+
+                if (mInfoLabel != nullptr)
+                {
+                    mInfoLabel->setText("Touche modifiée.");
+                }
+            }
+            else
+            {
+                if (mInfoLabel != nullptr)
+                {
+                    mInfoLabel->setText("Touche réservée ou invalide");
+                }
             }
         }
 

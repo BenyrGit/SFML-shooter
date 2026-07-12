@@ -60,6 +60,10 @@ add_executable(SFMLGame
     src/Label.hpp
  )
 
+if (MSVC)
+    target_compile_options(SFMLGame PRIVATE /utf-8)
+endif()
+
 target_link_libraries(SFMLGame PRIVATE
     SFML::Graphics
     SFML::Window
