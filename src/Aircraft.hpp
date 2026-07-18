@@ -12,6 +12,7 @@
  JJ-MM-AAAA     Nom                     Commentaire
  =========================================================
  18-06-2026     Benjamin Paquette       Ajout de méthodes pour tirer et lancer des missiles
+ 18-07-2026     Benjamin Paquette       Ajout d'un indice dans l'enum
  ****************************************/
 #pragma once
 
@@ -26,7 +27,8 @@ public:
     enum class Type
     {
         Eagle,
-        Raptor
+        Raptor,
+        TypeCount
     };
 
     // Méthodes

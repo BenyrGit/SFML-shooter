@@ -9,55 +9,57 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 find_package(SFML CONFIG REQUIRED COMPONENTS Graphics Window System)
 
 add_executable(SFMLGame
-    src/main.cpp
+    src/Aircraft.cpp
+    src/Aircraft.hpp
+    src/Button.cpp
+    src/Button.hpp
+    src/Category.hpp
+    src/Command.hpp
+    src/CommandQueue.cpp
+    src/CommandQueue.hpp
+    src/Component.cpp
+    src/Component.hpp
+    src/Container.cpp
+    src/Container.hpp
+    src/DataTables.hpp
+    src/DataTables.cpp
+    src/Entity.hpp
+    src/Entity.cpp
     src/Game.cpp
     src/Game.hpp
+    src/GameState.cpp
+    src/GameState.hpp
+    src/Label.cpp
+    src/Label.hpp
+    src/LoadingState.cpp
+    src/LoadingState.hpp
+    src/main.cpp
+    src/MenuState.cpp
+    src/MenuState.hpp
+    src/PauseState.cpp
+    src/PauseState.hpp
+    src/Player.cpp
+    src/Player.hpp
     src/ResourceHolder.hpp
     src/ResourceIdentifiers.hpp
     src/ResourceTypes.hpp
     src/SceneNode.hpp
     src/SceneNode.cpp
+    src/SettingsState.cpp
+    src/SettingsState.hpp
     src/SpriteNode.hpp
     src/SpriteNode.cpp
-    src/Entity.hpp
-    src/Entity.cpp
-    src/Aircraft.cpp
-    src/Aircraft.hpp
-    src/World.cpp
-    src/World.hpp
-    src/Category.hpp
-    src/Command.hpp
-    src/CommandQueue.cpp
-    src/CommandQueue.hpp
-    src/Player.cpp
-    src/Player.hpp
     src/State.cpp
     src/State.hpp
     src/StateIdentifiers.hpp
     src/StateStack.cpp
     src/StateStack.hpp
-    src/GameState.cpp
-    src/GameState.hpp
     src/TitleState.cpp
     src/TitleState.hpp
-    src/MenuState.cpp
-    src/MenuState.hpp
-    src/PauseState.cpp
-    src/PauseState.hpp
-    src/LoadingState.cpp
-    src/LoadingState.hpp
-    src/SettingsState.cpp
-    src/SettingsState.hpp
     src/Utility.cpp
     src/Utility.hpp
-    src/Component.cpp
-    src/Component.hpp
-    src/Container.cpp
-    src/Container.hpp
-    src/Button.cpp
-    src/Button.hpp
-    src/Label.cpp
-    src/Label.hpp
+    src/World.cpp
+    src/World.hpp
  )
 
 if (MSVC)
