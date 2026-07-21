@@ -13,6 +13,7 @@
  =========================================================
  18-06-2026     Benjamin Paquette       Ajout de méthodes pour tirer et lancer des missiles
  18-07-2026     Benjamin Paquette       Ajout d'un indice dans l'enum
+ 20-07-2026     Benjamin Paquette       Ajout d'un getteur pour avoir la vitesse max
  ****************************************/
 #pragma once
 
@@ -36,6 +37,7 @@ public:
 
     sf::FloatRect getBoundingRect() const;
     unsigned int getCategory() const override;
+    float getMaxSpeed() const;
 
     void fire();
     void launchMissile();

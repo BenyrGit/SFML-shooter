@@ -1,29 +1,22 @@
 #include "Aircraft.hpp"
+#include "DataTables.hpp"
 #include "Utility.hpp"
 #include <iostream>
 
 namespace
 {
-    // Convertit l'avion en texture. 
-    const sf::Texture& toTexture(Aircraft::Type type, const TextureHolder& textures)
+    const auto Table = initializeAircraftData();
+
+    std::size_t toIndex(Aircraft::Type type)
     {
-        switch (type)
-        {
-        case Aircraft::Type::Eagle:
-            return textures.get(Textures::ID::Eagle);
-
-        case Aircraft::Type::Raptor:
-            return textures.get(Textures::ID::Raptor);
-        }
-
-        // on retourne eagle par default pour éviter une erreur
-        return textures.get(Textures::ID::Eagle);
+        return static_cast<std::size_t>(type);
     }
 }
 
 Aircraft::Aircraft(Type type, const TextureHolder& textures)
-    : mType(type)
-    , mSprite(toTexture(type, textures))
+    : Entity(Table[toIndex(type)].hitpoints)
+    , mType(type)
+    , mSprite(textures.get(Table[toIndex(type)].texture))
 {
     centerOrigin(mSprite);
 }
@@ -53,6 +46,11 @@ unsigned int Aircraft::getCategory() const
     }
 
     return Category::None;
+}
+
+float Aircraft::getMaxSpeed() const
+{
+    return Table[toIndex(mType)].speed;
 }
 
 void Aircraft::fire() 

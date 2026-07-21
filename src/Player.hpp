@@ -14,6 +14,7 @@
  16-06-2026     Benjamin Paquette       Ajout d'actions
  16-06-2026     Benjamin Paquette       Méthodes pour configurer les touches
  28-06-2026     Benjamin Paquette       Méthode pour reset les touches au valeur par défaut
+ 20-07-2026     Benjamin Paquette       La vitesse vient de la classe Aircraft et non plus en dur dans Player
  ****************************************/
 #pragma once
 

@@ -3,11 +3,14 @@
 
 namespace
 {
-    constexpr float PlayerSpeed = 300.f;
-
-    void accelerateAircraft(Aircraft& aircraft, sf::Vector2f velocity, sf::Time deltaTime)
+    void accelerateAircraft(Aircraft& aircraft, sf::Vector2f direction, sf::Time Time)
     {
-        aircraft.accelerate(velocity);
+        const float speed = aircraft.getMaxSpeed();
+
+        aircraft.accelerate({
+            direction.x * speed,
+            direction.y * speed
+            });
     }
 }
 
@@ -25,7 +28,7 @@ void Player::initializeActions()
         derivedAction<Aircraft>(
             [](Aircraft& aircraft, sf::Time deltaTime)   
             {
-                accelerateAircraft(aircraft, { -PlayerSpeed, 0.f }, deltaTime);
+                accelerateAircraft(aircraft, { -1.f, 0.f }, deltaTime);
             }
         );
 
@@ -33,7 +36,7 @@ void Player::initializeActions()
         derivedAction<Aircraft>(
             [](Aircraft& aircraft, sf::Time deltaTime)
             {
-                accelerateAircraft(aircraft, { PlayerSpeed, 0.f }, deltaTime);
+                accelerateAircraft(aircraft, { 1.f, 0.f }, deltaTime);
             }
         );
 
@@ -41,7 +44,7 @@ void Player::initializeActions()
         derivedAction<Aircraft>(
             [](Aircraft& aircraft, sf::Time deltaTime)
             {
-                accelerateAircraft(aircraft, { 0.f, -PlayerSpeed }, deltaTime);
+                accelerateAircraft(aircraft, { 0.f, -1.f }, deltaTime);
             }
         );
 
@@ -49,7 +52,7 @@ void Player::initializeActions()
         derivedAction<Aircraft>(
             [](Aircraft& aircraft, sf::Time deltaTime)
             {
-                accelerateAircraft(aircraft, { 0.f, PlayerSpeed }, deltaTime);
+                accelerateAircraft(aircraft, { 0.f, 1.f }, deltaTime);
             }
         );
 
